@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda una llamada — Urbanalítica</title>
+  <meta name="description" content="Agenda una llamada con nuestro equipo para analizar tu próxima ubicación de expansión.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
+</head>
+<body>
+
+  <!-- ======== HEADER ======== -->
+  <header class="header" id="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="assets/img/logo.jpg" alt="Urbanalítica">
+      </a>
+
+      <nav class="nav">
+        <div class="nav-links">
+          <a href="retail.html">Retail</a>
+          <a href="fondos.html">Fondos</a>
+          <a href="index.html#acerca">Acerca</a>
+        </div>
+        <div class="nav-buttons">
+          <a href="login.html" class="btn btn-primary">Inicia tu sesión</a>
+          <a href="agenda.html" class="btn btn-outline">Agenda una llamada</a>
+        </div>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="retail.html">Retail</a>
+    <a href="fondos.html">Fondos</a>
+    <a href="index.html#acerca">Acerca</a>
+    <a href="login.html" class="btn btn-primary btn-lg">Inicia tu sesión</a>
+    <a href="agenda.html" class="btn btn-outline btn-lg">Agenda una llamada</a>
+  </div>
+
+  <!-- ======== PAGE HEADER ======== -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Agenda una llamada</h1>
+      <p>Platícanos sobre tu proyecto de expansión. Nuestro equipo te contactará para analizar juntos las mejores ubicaciones.</p>
+    </div>
+  </section>
+
+  <!-- ======== FORM ======== -->
+  <section class="form-section">
+    <div class="container">
+      <div class="form-container">
+        <form id="agendaForm" action="#" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="apellido">Apellido</label>
+              <input type="text" id="apellido" name="apellido" placeholder="Tu apellido" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="tu@empresa.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="empresa">Empresa / Marca</label>
+            <input type="text" id="empresa" name="empresa" placeholder="Nombre de tu empresa">
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="+52 (55) 0000 0000">
+          </div>
+
+          <div class="form-group">
+            <label for="sucursales">¿Cuántas sucursales tienes actualmente?</label>
+            <select id="sucursales" name="sucursales">
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option value="1-5">1 - 5</option>
+              <option value="6-20">6 - 20</option>
+              <option value="21-50">21 - 50</option>
+              <option value="51-100">51 - 100</option>
+              <option value="100+">Más de 100</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="mensaje">¿Cómo podemos ayudarte?</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos sobre tu proyecto de expansión, las zonas que te interesan, el giro de tu negocio o cualquier detalle relevante..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Agendar llamada</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <img src="assets/img/logo.jpg" alt="Urbanalítica">
+      </div>
+      <div class="footer-links">
+        <a href="retail.html">Retail</a>
+        <a href="fondos.html">Fondos</a>
+        <a href="index.html#acerca">Acerca</a>
+        <a href="agenda.html">Agenda una llamada</a>
+        <a href="login.html">Inicia sesión</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Urbanalítica. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

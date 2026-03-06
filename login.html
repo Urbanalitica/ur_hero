@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicia sesión — Urbanalítica</title>
+  <meta name="description" content="Accede a la plataforma de Urbanalítica para analizar territorios y gestionar tu red de sucursales.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
+</head>
+<body>
+
+  <div class="login-page">
+    <div class="login-card">
+      <a href="index.html" class="logo">
+        <img src="assets/img/logo.jpg" alt="Urbanalítica">
+      </a>
+
+      <h2>Inicia sesión</h2>
+      <p class="subtitle">Accede a tu panel de análisis territorial</p>
+
+      <form id="loginForm" action="#" method="POST">
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" placeholder="tu@empresa.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" required>
+          <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Iniciar sesión</button>
+      </form>
+
+      <div class="login-footer">
+        <p>¿No tienes una cuenta? <a href="agenda.html">Solicita acceso</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
