@@ -121,4 +121,21 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(el);
   });
 
+  // --- "Otro" radio: show/hide text input ---
+  const rolRadios = document.querySelectorAll('input[name="rol"]');
+  const rolOtroTexto = document.getElementById('rol-otro-texto');
+  if (rolRadios.length && rolOtroTexto) {
+    rolRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        if (radio.value === 'Otro' && radio.checked) {
+          rolOtroTexto.style.display = 'block';
+          rolOtroTexto.focus();
+        } else {
+          rolOtroTexto.style.display = 'none';
+          rolOtroTexto.value = '';
+        }
+      });
+    });
+  }
+
 });

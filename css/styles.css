@@ -379,7 +379,7 @@ p {
 }
 
 .urx-label-2 {
-  top: 50%;
+  top: 51%;
   right: 20%;
 }
 
@@ -567,7 +567,7 @@ p {
    FOOTER
    ============================================ */
 .footer {
-  background: var(--color-dark);
+  background: #000000;
   color: var(--color-white);
   padding: var(--spacing-2xl) 0 var(--spacing-lg);
 }
@@ -645,13 +645,13 @@ p {
 }
 
 .form-group {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
 }
 
 .form-group label {
   display: block;
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: 500;
   color: var(--color-dark);
   margin-bottom: 0.4rem;
 }
@@ -766,6 +766,128 @@ p {
 
 .forgot-password:hover {
   text-decoration: underline;
+}
+
+/* ============================================
+   PAGE: EVALUACIÓN (Custom Form)
+   ============================================ */
+.form-hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+  margin-top: -0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.radio-group,
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.radio-option,
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-size: var(--font-size-sm);
+  font-weight: 300;
+  color: var(--color-text);
+}
+
+.radio-option:hover,
+.checkbox-option:hover {
+  border-color: var(--color-primary-light);
+  background: rgba(232, 100, 74, 0.03);
+}
+
+.radio-option input:checked + span,
+.checkbox-option input:checked + span {
+  color: var(--color-dark);
+  font-weight: 400;
+}
+
+.radio-option:has(input:checked),
+.checkbox-option:has(input:checked) {
+  border-color: var(--color-primary);
+  background: rgba(232, 100, 74, 0.05);
+}
+
+.radio-option input[type="radio"],
+.checkbox-option input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Range slider */
+.range-group {
+  padding: 0.5rem 0;
+}
+
+.range-group input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-border);
+  outline: none;
+  cursor: pointer;
+}
+
+.range-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 3px solid var(--color-white);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.range-group input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 3px solid var(--color-white);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.4rem;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+}
+
+.range-current {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* ============================================
+   PAGE: AVISO DE PRIVACIDAD
+   ============================================ */
+.form-container h3 {
+  font-weight: 500;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
 }
 
 /* ============================================
