@@ -1085,6 +1085,15 @@ p {
     grid-template-columns: 1fr;
   }
 
+  .form-section {
+    padding-bottom: var(--spacing-3xl);
+  }
+
+  .form-container {
+    padding: var(--spacing-lg);
+    margin: 0 var(--spacing-sm);
+  }
+
   .footer .container {
     flex-direction: column;
     text-align: center;
@@ -1121,5 +1130,18 @@ p {
 
   .login-card {
     padding: var(--spacing-lg);
+  }
+
+  .form-section {
+    padding-bottom: 6rem;
+  }
+
+  .page-header {
+    padding-top: calc(72px + var(--spacing-xl));
+    padding-bottom: var(--spacing-lg);
+  }
+
+  .page-header h1 {
+    font-size: var(--font-size-3xl);
   }
 }
