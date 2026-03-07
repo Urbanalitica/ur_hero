@@ -471,8 +471,8 @@ p {
 }
 
 .section-territory .container {
-  position: absolute;
-  bottom: 30px;
+  position: relative;
+  bottom: 100px;
   left: 0;
   right: 0;
   z-index: 2;
