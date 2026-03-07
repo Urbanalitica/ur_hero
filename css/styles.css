@@ -1096,11 +1096,15 @@ p {
   }
 
   .section-territory .container {
-    bottom: 15px;
+    position: relative;
+    bottom: auto;
+    margin-top: -80px;
+    padding: 0 var(--spacing-md);
   }
 
   .territory-card {
-    margin: var(--spacing-lg);
+    margin: 0 auto;
+    max-width: 100%;
   }
 
   .urx-label {
