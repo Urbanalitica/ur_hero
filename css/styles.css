@@ -471,13 +471,16 @@ p {
 }
 
 .section-territory .container {
-  position: relative;
-  bottom: 100px;
-  left: 0;
-  right: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 2;
   display: flex;
   justify-content: center;
+  width: 100%;
+  padding: 0 var(--spacing-md);
+  box-sizing: border-box;
 }
 
 .territory-card {
@@ -888,13 +891,13 @@ p {
   position: relative;
   padding-top: calc(72px + var(--spacing-3xl));
   padding-bottom: var(--spacing-3xl);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .franquicias-hero .bg-hexagons {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 0%;
   width: 50%;
   height: 100%;
   object-fit: cover;
@@ -1096,10 +1099,7 @@ p {
   }
 
   .section-territory .container {
-    position: relative;
-    bottom: auto;
-    margin-top: -80px;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-sm);
   }
 
   .territory-card {
