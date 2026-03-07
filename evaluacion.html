@@ -58,7 +58,13 @@
   <section class="form-section">
     <div class="container">
       <div class="form-container" style="max-width: 680px;">
-        <form id="evaluacionForm">
+        <form id="evaluacionForm" action="https://formsubmit.co/hola@urbanalitica.com" method="POST">
+          <input type="hidden" name="_subject" value="Nueva evaluación de potencial retail">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_autoresponse" value="¡Gracias por completar tu evaluación! Nuestro equipo revisará tus respuestas y te enviaremos tu análisis inicial en las próximas 24 horas. — Equipo Urbanalítica">
+          <input type="hidden" name="_next" value="https://urbanalitica.com">
+          <input type="text" name="_honey" style="display:none">
 
           <!-- Pregunta 1 -->
           <div class="form-group">
@@ -151,7 +157,7 @@
                 <span>Conocimiento local / Intuición</span>
               </label>
               <label class="checkbox-option">
-                <input type="checkbox" name="herramientas" value="Estudios de mercado de pago">
+                <input type="checkbox" name="herramientas" value="Estudios de mercado de pago (externos)">
                 <span>Estudios de mercado de pago (externos)</span>
               </label>
               <label class="checkbox-option">

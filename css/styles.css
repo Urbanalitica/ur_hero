@@ -461,29 +461,20 @@ p {
    ============================================ */
 .section-territory {
   position: relative;
-  min-height: 70vh;
-  display: flex;
-  align-items: flex-end;
-  overflow: visible;
-  margin-top: -200px;
   z-index: 0;
-  padding-bottom: 30px;
 }
 
 .section-territory .bg-hexagons {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 130%;
+  display: block;
+  width: 100%;
   height: auto;
-  object-fit: contain;
-  object-position: right bottom;
-  z-index: 0;
-  opacity: 0.9;
 }
 
 .section-territory .container {
-  position: relative;
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
   z-index: 2;
   display: flex;
   justify-content: center;
@@ -1104,8 +1095,8 @@ p {
     justify-content: center;
   }
 
-  .section-territory {
-    min-height: 60vh;
+  .section-territory .container {
+    bottom: 15px;
   }
 
   .territory-card {

@@ -34,32 +34,42 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Form submission handler (Agenda) ---
+  // Sends via AJAX to FormSubmit so the page doesn't redirect
   const agendaForm = document.getElementById('agendaForm');
   if (agendaForm) {
-    agendaForm.addEventListener('submit', (e) => {
+    agendaForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const formData = new FormData(agendaForm);
-      const data = Object.fromEntries(formData);
-
-      // Show confirmation
       const btn = agendaForm.querySelector('button[type="submit"]');
       const originalText = btn.textContent;
-      btn.textContent = '¡Enviado! Te contactaremos pronto';
-      btn.style.background = '#2D8F5E';
-      btn.style.borderColor = '#2D8F5E';
+      btn.textContent = 'Enviando...';
       btn.disabled = true;
 
-      // Reset after 3 seconds
+      try {
+        const formData = new FormData(agendaForm);
+        await fetch('https://formsubmit.co/ajax/hola@urbanalitica.com', {
+          method: 'POST',
+          body: formData
+        });
+
+        btn.textContent = '¡Enviado! Te contactaremos pronto';
+        btn.style.background = '#2D8F5E';
+        btn.style.borderColor = '#2D8F5E';
+      } catch (err) {
+        console.warn('FormSubmit error:', err);
+        btn.textContent = 'Error — intenta de nuevo';
+        btn.style.background = '#c0392b';
+        btn.style.borderColor = '#c0392b';
+      }
+
+      // Reset after 4 seconds
       setTimeout(() => {
         btn.textContent = originalText;
         btn.style.background = '';
         btn.style.borderColor = '';
         btn.disabled = false;
         agendaForm.reset();
-      }, 3000);
-
-      console.log('Form data:', data);
+      }, 4000);
     });
   }
 
@@ -138,6 +148,43 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ==========================================================
+  // --- Helper: submit to Google Forms via hidden iframe ---
+  // This is MUCH more reliable than fetch with mode:'no-cors'
+  // because form submissions are not subject to CORS policy.
+  // ==========================================================
+  function submitToGoogleForms(formURL, fields) {
+    // Create hidden iframe
+    const iframe = document.createElement('iframe');
+    iframe.name = 'gf-iframe-' + Date.now();
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    // Create hidden form targeting the iframe
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = formURL;
+    form.target = iframe.name;
+
+    // Add all fields
+    fields.forEach(({ name, value }) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+
+    // Clean up after 5 seconds
+    setTimeout(() => {
+      if (form.parentNode) form.parentNode.removeChild(form);
+      if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+    }, 5000);
+  }
+
   // --- Evaluación form: dual submit to Google Forms + FormSubmit ---
   const evaluacionForm = document.getElementById('evaluacionForm');
   if (evaluacionForm) {
@@ -169,29 +216,28 @@ document.addEventListener('DOMContentLoaded', () => {
       const giro = evaluacionForm.querySelector('[name="giro_negocio"]').value;
       const franquicia = evaluacionForm.querySelector('[name="nombre_franquicia"]').value;
 
-      // --- 1) Google Forms submission ---
+      // --- 1) Google Forms submission (hidden iframe — reliable) ---
       const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSc5y5VO5MPRpC2fNoM1mhrtXFfv2_4Q3LpKhtuzV_W34URAIQ/formResponse';
-      const gfData = new URLSearchParams();
-      gfData.append('entry.1777455602', rolValue);
-      gfData.append('entry.1954725010', unidades);
-      gfData.append('entry.1212940379', seguridad);
-      gfData.append('entry.674795550', tiempoValue);
-      herramientas.forEach(h => gfData.append('entry.1724548844', h));
-      gfData.append('entry.690297100', valorScore);
-      gfData.append('entry.366589416', nombre);
-      gfData.append('entry.1513591299', email);
-      gfData.append('entry.907161128', giro);
-      gfData.append('entry.512627142', franquicia);
+      const gfFields = [
+        { name: 'entry.1777455602', value: rolValue },
+        { name: 'entry.1954725010', value: unidades },
+        { name: 'entry.1212940379', value: seguridad },
+        { name: 'entry.674795550',  value: tiempoValue },
+        { name: 'entry.690297100',  value: valorScore },
+        { name: 'entry.366589416',  value: nombre },
+        { name: 'entry.1513591299', value: email },
+        { name: 'entry.907161128',  value: giro },
+        { name: 'entry.512627142',  value: franquicia }
+      ];
+      // Checkboxes: append each selected value as a separate field with same entry ID
+      herramientas.forEach(h => {
+        gfFields.push({ name: 'entry.1724548844', value: h });
+      });
 
       try {
-        await fetch(googleFormURL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: gfData.toString()
-        });
+        submitToGoogleForms(googleFormURL, gfFields);
       } catch (err) {
-        console.warn('Google Forms submit (expected no-cors):', err);
+        console.warn('Google Forms submit error:', err);
       }
 
       // --- 2) FormSubmit email notification ---
