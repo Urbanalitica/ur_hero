@@ -4,118 +4,590 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Urbanalítica</title>
-  <meta name="description" content="Somos el motor de expansión y optimización de redes retail en mercados emergentes. Analiza el territorio antes de elegir una ubicación.">
-  <meta property="og:title" content="Urbanalítica">
-  <meta property="og:description" content="El motor de expansión y optimización de redes retail en mercados emergentes.">
-  <meta property="og:image" content="https://urbanalitica.com/assets/img/logoUR_B.png">
-  <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/styles.css?v=2">
+  <meta name="description" content="Los estudios de mercado miden demanda. Nosotros leemos el territorio. Una lectura multiescalar de lo que tus ubicaciones alcanzan — de la esquina a la región — comparada contra los lugares que tu sector ya eligió.">
   <link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=IBM+Plex+Sans:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       URBANALÍTICA — OPCIÓN B · "La sala nocturna"
+       Inversión del museo: el sitio entero es el campo cobalto
+       profundo (el negativo del papel); una sola sala de papel
+       como momento de luz. Fraunces (serif óptica editorial) +
+       IBM Plex Sans/Mono (cuerpo y datos). Autocontenido a propósito.
+       ============================================================ */
+    :root {
+      --noche:      #0B0F2A;   /* campo nocturno — índigo casi tinta */
+      --noche-alta: #131A45;   /* segundo plano */
+      --cobalto:    #4856B0;   /* pigmento de marca */
+      --cobalto-luz:#8A96E8;   /* señal legible sobre noche */
+      --cobalto-vel:#2A3690;
+      --luz:        #F7F5F1;   /* papel */
+      --luz-70:     rgba(247,245,241,0.72);
+      --luz-45:     rgba(247,245,241,0.45);
+      --luz-12:     rgba(247,245,241,0.12);
+      --borde:      #8B1E1E;   /* bordeaux estructural */
+      --borde-vivo: #B0403C;
+      --tinta:      #0A0A0A;
+      --serif: 'Fraunces', Georgia, serif;              /* voz de display — headlines e itálicas */
+      --sans:  'IBM Plex Sans', system-ui, sans-serif;  /* cuerpo institucional */
+      --mono:  'IBM Plex Mono', Consolas, monospace;    /* kickers, datos, botones */
+      --max: 1360px;
+      --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    /* passe-partout: la noche montada sobre papel, como obra enmarcada */
+    html { scroll-behavior:smooth; background:var(--luz); }
+    body {
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.62;
+      color: var(--luz);
+      margin: 14px;
+      min-height: calc(100vh - 28px);
+      background:
+        radial-gradient(1100px 700px at 85% -10%, rgba(72,86,176,0.32), transparent 62%),
+        radial-gradient(900px 900px at -10% 110%, rgba(42,54,144,0.4), transparent 58%),
+        var(--noche);
+      overflow-x: hidden;
+    }
+    a { color:inherit; text-decoration:none; }
+    ::selection { background:var(--cobalto); color:var(--luz); }
+
+    .container { max-width:var(--max); margin:0 auto; padding:0 28px; }
+
+    /* ── coreografía de carga (CSS only) ─────────────────────── */
+    @keyframes rise { from { opacity:0; transform:translateY(34px); } to { opacity:1; transform:none; } }
+    @keyframes fadein { from { opacity:0; } to { opacity:1; } }
+    @keyframes girar { to { transform:rotate(360deg); } }
+    @keyframes marquesina { to { transform:translateX(-50%); } }
+    .rise { opacity:0; animation:rise 900ms var(--ease) forwards; }
+    .d1{animation-delay:80ms} .d2{animation-delay:220ms} .d3{animation-delay:380ms}
+    .d4{animation-delay:560ms} .d5{animation-delay:760ms}
+    .reveal { opacity:0; transform:translateY(26px); transition:opacity 700ms var(--ease), transform 700ms var(--ease); }
+    .reveal.visible { opacity:1; transform:none; }
+    @media (prefers-reduced-motion: reduce) {
+      .rise, .reveal { opacity:1 !important; transform:none !important; animation:none !important; transition:none !important; }
+      .hex-orbita, .cinta-track { animation:none !important; }
+    }
+
+    /* ── tipos ────────────────────────────────────────────────── */
+    .kicker {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cobalto-luz);
+    }
+    .sala-num {
+      font-family: var(--mono);
+      font-size: clamp(60px, 8vw, 110px);
+      line-height: 0.9;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(247,245,241,0.22);
+      user-select: none;
+    }
+
+    /* ── botones ──────────────────────────────────────────────── */
+    .btn {
+      display:inline-flex; align-items:center; gap:0.6rem;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 1rem 1.7rem;
+      border: 1px solid var(--luz);
+      color: var(--luz);
+      background: transparent;
+      cursor: pointer;
+      transition: background 220ms var(--ease), color 220ms var(--ease), border-color 220ms var(--ease);
+      white-space: nowrap;
+    }
+    .btn .flecha { display:inline-block; transition: transform 220ms var(--ease); }
+    .btn:hover { background:var(--luz); color:var(--noche); }
+    .btn:hover .flecha { transform: translateX(5px); }
+    .btn--lleno { background:var(--luz); color:var(--noche); }
+    .btn--lleno:hover { background:var(--cobalto); border-color:var(--cobalto); color:var(--luz); }
+    .btn--tinta { border-color:var(--tinta); color:var(--tinta); }
+    .btn--tinta:hover { background:var(--tinta); color:var(--luz); }
+
+    /* ── header ───────────────────────────────────────────────── */
+    .header {
+      position: fixed; top:14px; left:14px; right:14px; width:auto; z-index:100;
+      background: linear-gradient(180deg, rgba(11,15,42,0.9), rgba(11,15,42,0));
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .header .container { display:flex; align-items:center; justify-content:space-between; height:72px; }
+    .logo {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      color: var(--luz);
+    }
+    .logo span { color: var(--cobalto-luz); margin-left:1px; }
+    .nav { display:flex; align-items:center; gap:2.2rem; }
+    .nav-links { display:flex; gap:2.2rem; }
+    .nav-links a {
+      font-family: var(--mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
+      color: var(--luz-70); position:relative; padding:4px 0;
+      transition: color 200ms var(--ease);
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:0; left:0; width:0; height:1px;
+      background: var(--cobalto-luz); transition: width 260ms var(--ease);
+    }
+    .nav-links a:hover { color:var(--luz); }
+    .nav-links a:hover::after { width:100%; }
+    .nav-cta { display:flex; gap:0.6rem; }
+    .nav-cta .btn { padding:0.65rem 1.1rem; font-size:11px; }
+    .menu-toggle { display:none; background:none; border:none; cursor:pointer; padding:8px; }
+    .menu-toggle span { display:block; width:24px; height:1px; background:var(--luz); margin:7px 0; transition:all 250ms var(--ease); }
+    .mobile-nav {
+      position:fixed; inset:86px 14px 14px 14px; background:var(--noche); z-index:99;
+      display:flex; flex-direction:column; gap:1.4rem; padding:3rem 28px;
+      transform:translateX(100%); transition:transform 300ms var(--ease);
+      border-top:1px solid var(--luz-12);
+    }
+    .mobile-nav.active { transform:none; }
+    .mobile-nav a { font-family:var(--mono); font-size:15px; text-transform:uppercase; letter-spacing:0.1em; color:var(--luz); padding:0.8rem 0; border-bottom:1px solid var(--luz-12); }
+    .menu-toggle.active span:nth-child(1){ transform:rotate(45deg) translate(6px,6px); }
+    .menu-toggle.active span:nth-child(2){ opacity:0; }
+    .menu-toggle.active span:nth-child(3){ transform:rotate(-45deg) translate(5px,-5px); }
+
+    /* ── HERO ─────────────────────────────────────────────────── */
+    .hero {
+      position:relative; min-height:calc(100vh - 28px);
+      display:flex; align-items:center;
+      padding: 120px 0 80px;
+      overflow:hidden;
+    }
+    #campoNoche { position:absolute; inset:0; width:100%; height:100%; opacity:0; animation:fadein 1600ms 300ms var(--ease) forwards; }
+    /* hexágono orbital — atmósfera, casi imperceptible */
+    .hex-orbita {
+      position:absolute; right:-14vw; top:50%; width:56vw; height:56vw;
+      margin-top:-28vw; opacity:0.16;
+      animation: girar 240s linear infinite;
+      pointer-events:none;
+    }
+    .hero .container { position:relative; z-index:2; }
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 200;
+      font-size: clamp(56px, 8.6vw, 132px);
+      line-height: 0.98;
+      letter-spacing: -0.015em;
+      font-variation-settings: 'opsz' 144;
+      max-width: 12ch;
+    }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 560;
+      color: var(--luz);
+    }
+    .hero h1 .punto { color: var(--cobalto-luz); font-style:normal; }
+    .hero-lede {
+      margin-top: 2.2rem;
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--luz-70);
+      max-width: 52ch;
+    }
+    .hero-cta { margin-top:2.6rem; display:flex; flex-wrap:wrap; gap:0.8rem; }
+
+    /* ── cinta / marquesina de escalas ────────────────────────── */
+    .cinta {
+      position:relative; z-index:2;
+      border-top:1px solid var(--luz-12);
+      border-bottom:1px solid var(--luz-12);
+      overflow:hidden;
+      background: rgba(11,15,42,0.55);
+    }
+    .cinta-track {
+      display:flex; width:max-content;
+      animation: marquesina 46s linear infinite;
+    }
+    .cinta-track span {
+      font-family:var(--mono); font-size:12px; letter-spacing:0.3em; text-transform:uppercase;
+      color:var(--luz-45); padding:14px 0 14px 3.2rem; white-space:nowrap;
+    }
+    .cinta-track b { color:var(--cobalto-luz); font-weight:400; padding-left:3.2rem; }
+
+    /* ── tesis ────────────────────────────────────────────────── */
+    .tesis { padding: 9rem 0; }
+    .tesis h2 {
+      font-family:var(--serif);
+      font-weight:200; font-style:italic;
+      font-size: clamp(34px, 4.6vw, 66px);
+      line-height:1.12; letter-spacing:-0.01em;
+      max-width: 22ch;
+      font-variation-settings:'opsz' 100;
+    }
+    .tesis h2 strong { font-style:normal; font-weight:560; }
+    .tesis .kicker { display:block; margin-bottom:2rem; }
+
+    /* ── salas ────────────────────────────────────────────────── */
+    .sala { padding: 7.5rem 0; border-top:1px solid var(--luz-12); }
+    .sala .container { display:grid; grid-template-columns: minmax(0,5fr) minmax(0,7fr); gap:4.5rem; align-items:center; }
+    .sala--flip .container { grid-template-columns: minmax(0,7fr) minmax(0,5fr); }
+    .sala-copy h3 {
+      font-family:var(--serif);
+      font-weight:200;
+      font-size: clamp(32px, 3.8vw, 54px);
+      line-height:1.04; letter-spacing:-0.01em;
+      margin: 1.4rem 0 1.6rem;
+      max-width: 17ch;
+      font-variation-settings:'opsz' 144;
+    }
+    .sala-copy h3 em { font-style:italic; font-weight:560; }
+    .sala-copy p { color:var(--luz-70); max-width:48ch; margin-bottom:1.1rem; font-size:15.5px; line-height:1.7; }
+    .sala-copy p strong { color:var(--luz); font-weight:600; }
+    .marco {
+      border:1px solid var(--luz-12);
+      background: linear-gradient(160deg, rgba(19,26,69,0.55), rgba(11,15,42,0.2));
+      padding: clamp(1.5rem, 3vw, 3rem);
+    }
+    .marco svg, .marco canvas { width:100%; height:auto; display:block; }
+
+    .capas-grid { display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--luz-12); }
+    .capa {
+      padding:1.3rem; border-right:1px solid var(--luz-12); border-bottom:1px solid var(--luz-12);
+      transition: background 250ms var(--ease);
+      background: rgba(19,26,69,0.3);
+    }
+    .capa:nth-child(2n){ border-right:none; }
+    .capa:nth-child(n+3){ border-bottom:none; }
+    .capa:hover { background: rgba(72,86,176,0.16); }
+    .capa canvas { width:100%; aspect-ratio:4/3; display:block; }
+    .capa-name { font-family:var(--mono); font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--luz); margin-top:0.9rem; }
+    .capa-desc { font-size:13.5px; color:var(--luz-45); margin-top:0.35rem; line-height:1.55; }
+
+    /* ── sala de papel (la inversión) ─────────────────────────── */
+    .sala-papel {
+      position:relative;
+      background: var(--luz);
+      color: var(--tinta);
+      padding: 10rem 0;
+      overflow:hidden;
+    }
+    .sala-papel::before {
+      content:''; position:absolute; top:0; left:0; width:100%; height:2px;
+      background: linear-gradient(90deg, var(--cobalto) 0%, var(--borde) 100%);
+    }
+    #campoPapel { position:absolute; inset:0; width:100%; height:100%; }
+    .sala-papel .container { position:relative; z-index:2; }
+    .sala-papel h2 {
+      font-family:var(--serif);
+      font-weight:200;
+      font-size: clamp(44px, 6.6vw, 104px);
+      line-height:0.98; letter-spacing:-0.015em;
+      max-width:14ch;
+      font-variation-settings:'opsz' 144;
+      color: var(--tinta);
+    }
+    .sala-papel h2 em { font-style:italic; font-weight:560; color:var(--cobalto); }
+    .sala-papel p { margin-top:2rem; font-size:16.5px; color:#4A4640; max-width:46ch; }
+    .sala-papel .cta { margin-top:2.6rem; }
+
+    /* ── secciones de papel — el blanco del museo ─────────────── */
+    .papel { background: var(--luz); color: var(--tinta); border-top: none !important; }
+    .papel .kicker { color: var(--cobalto); }
+    .papel .sala-num { -webkit-text-stroke: 1px rgba(10,10,10,0.18); }
+    .papel .sala-copy h3, .papel h2, .papel h4 { color: var(--tinta); }
+    .papel .sala-copy p { color: #4A4640; }
+    .papel .sala-copy p strong { color: var(--tinta); }
+    .papel .marco { border-color: rgba(10,10,10,0.1); background: var(--luz); }
+    .papel .paso { border-color: rgba(10,10,10,0.08); }
+    .papel .paso p { color: #4A4640; }
+    .papel .como-grid { border-color: rgba(10,10,10,0.08); }
+    .papel .como-nota { border-color: rgba(10,10,10,0.08); color: var(--tinta); }
+    .papel .quien-grid { border-top-color: var(--tinta); }
+    .papel .quien-b { border-color: rgba(10,10,10,0.08); }
+    .papel .quien-b p { color: var(--tinta); }
+    .papel .btn { border-color: var(--tinta); color: var(--tinta); }
+    .papel .btn:hover { background: var(--tinta); color: var(--luz); }
+    .papel .btn--lleno { background: var(--tinta); color: var(--luz); }
+    .papel .btn--lleno:hover { background: var(--cobalto); border-color: var(--cobalto); color: var(--luz); }
+    .quien.papel { background: #F1EEE8; }
+
+    /* ── cómo / para quién ────────────────────────────────────── */
+    .como { padding: 8rem 0 6rem; border-top:1px solid var(--luz-12); }
+    .como h2 { font-family:var(--serif); font-weight:200; font-size:clamp(30px,3.6vw,50px); margin:1.2rem 0 3.5rem; font-variation-settings:'opsz' 144; max-width:24ch; }
+    .como h2 em { font-style:italic; font-weight:560; }
+    .como-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--luz-12); }
+    .paso { padding:2.4rem 2.4rem 2.4rem 0; border-right:1px solid var(--luz-12); }
+    .paso:nth-child(2){ padding-left:2.4rem; }
+    .paso:last-child { border-right:none; padding-left:2.4rem; }
+    .paso-num { font-family:var(--mono); font-size:12px; letter-spacing:0.2em; color:var(--borde-vivo); border-bottom:1px solid var(--borde-vivo); padding-bottom:5px; display:inline-block; margin-bottom:1.4rem; }
+    .paso h4 { font-weight:600; font-size:20px; letter-spacing:-0.005em; margin-bottom:0.6rem; }
+    .paso p { font-size:14px; color:var(--luz-70); }
+    .como-nota { margin-top:3.6rem; padding-top:2rem; border-top:1px solid var(--luz-12); font-size:20px; font-weight:300; max-width:52ch; line-height:1.5; }
+    .como-nota strong { font-weight:600; }
+
+    .quien { padding: 6.5rem 0; border-top:1px solid var(--luz-12); background:rgba(19,26,69,0.35); }
+    .quien-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--luz-70); margin-top:2.2rem; }
+    .quien-b { padding:2.2rem 2.2rem 2.2rem 0; border-right:1px solid var(--luz-12); }
+    .quien-b:nth-child(2){ padding-left:2.2rem; }
+    .quien-b:last-child { border-right:none; padding-left:2.2rem; }
+    .quien-b .kicker { display:block; margin-bottom:0.9rem; }
+    .quien-b p { font-size:19px; font-weight:300; line-height:1.42; max-width:24ch; }
+
+    /* ── final + footer ───────────────────────────────────────── */
+    .final { padding: 9rem 0; border-top:1px solid var(--luz-12); }
+    .final h2 { font-family:var(--serif); font-weight:200; font-style:italic; font-size:clamp(40px,5.6vw,84px); letter-spacing:-0.01em; line-height:1.02; max-width:16ch; font-variation-settings:'opsz' 144; }
+    .final p { margin-top:1.6rem; color:var(--luz-70); max-width:46ch; font-size:15.5px; }
+    .final-cta { margin-top:2.4rem; display:flex; flex-wrap:wrap; gap:0.8rem; }
+
+    .footer { border-top:1px solid var(--borde); padding:3.2rem 0 1.6rem; }
+    .footer .container { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.4rem; }
+    .footer-logo { font-family:var(--sans); font-weight:700; font-size:15px; }
+    .footer-logo span { color:var(--cobalto-luz); }
+    .footer-links { display:flex; gap:1.8rem; flex-wrap:wrap; }
+    .footer-links a { font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--luz-45); transition:color 200ms var(--ease); }
+    .footer-links a:hover { color:var(--cobalto-luz); }
+    .footer-copy { width:100%; margin-top:1.6rem; padding-top:1.4rem; border-top:1px solid var(--luz-12); font-family:var(--mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--luz-45); }
+
+    /* ── responsive ───────────────────────────────────────────── */
+    @media (max-width:1024px){
+      .sala .container, .sala--flip .container { grid-template-columns:1fr; gap:3rem; }
+      .como-grid, .quien-grid { grid-template-columns:1fr; }
+      .paso, .quien-b { border-right:none; border-bottom:1px solid var(--luz-12); padding:1.8rem 0; }
+      .paso:nth-child(2), .paso:last-child, .quien-b:nth-child(2), .quien-b:last-child { padding-left:0; }
+      .paso:last-child, .quien-b:last-child { border-bottom:none; }
+      .hex-orbita { display:none; }
+    }
+    @media (max-width:768px){
+      .nav-links, .nav-cta { display:none; }
+      .menu-toggle { display:block; }
+      .hero { min-height:auto; padding:140px 0 70px; }
+      .sala { padding:5rem 0; }
+      .sala-papel { padding:6rem 0; }
+      .tesis { padding:5rem 0; }
+      .capas-grid { grid-template-columns:1fr; }
+      .capa { border-right:none !important; border-bottom:1px solid var(--luz-12) !important; }
+      .capa:last-child { border-bottom:none !important; }
+    }
+  </style>
 </head>
 <body>
 
   <!-- ======== HEADER ======== -->
-  <header class="header" id="header">
+  <header class="header">
     <div class="container">
-      <a href="index.html" class="logo">
-        <img src="assets/img/logo.jpg" alt="Urbanalítica">
-      </a>
-
+      <a href="index.html" class="logo">Urbanalítica<span>.</span></a>
       <nav class="nav">
         <div class="nav-links">
           <a href="retail.html">Retail</a>
           <a href="fondos.html">Fondos</a>
           <a href="#acerca">Acerca</a>
         </div>
-        <div class="nav-buttons">
-          <a href="login.html" class="btn btn-primary">Inicia tu sesión</a>
-          <a href="agenda.html" class="btn btn-outline">Agenda una llamada</a>
+        <div class="nav-cta">
+          <a href="login.html" class="btn">Entrar al estudio</a>
+          <a href="agenda.html" class="btn btn--lleno">Agenda una lectura</a>
         </div>
       </nav>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
     </div>
   </header>
-
-  <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobileNav">
     <a href="retail.html">Retail</a>
     <a href="fondos.html">Fondos</a>
     <a href="#acerca">Acerca</a>
-    <a href="login.html" class="btn btn-primary btn-lg">Inicia tu sesión</a>
-    <a href="agenda.html" class="btn btn-outline btn-lg">Agenda una llamada</a>
+    <a href="login.html">Entrar al estudio</a>
+    <a href="agenda.html">Agenda una lectura</a>
   </div>
 
   <!-- ======== HERO ======== -->
   <section class="hero">
+    <canvas id="campoNoche" aria-hidden="true"></canvas>
+    <svg class="hex-orbita" viewBox="0 0 100 100" aria-hidden="true">
+      <polygon points="50,3 92,26.5 92,73.5 50,97 8,73.5 8,26.5" fill="none" stroke="#8A96E8" stroke-width="0.25"/>
+      <polygon points="50,17 80,33.5 80,66.5 50,83 20,66.5 20,33.5" fill="none" stroke="#8A96E8" stroke-width="0.2"/>
+    </svg>
     <div class="container">
-      <div class="hero-map">
-        <img src="assets/img/hero-map.png" alt="Mapa hexagonal de análisis territorial" loading="eager">
-        <div class="urx-label urx-label-1"><span class="urx-score urx-orange">UBx 37</span></div>
-        <div class="urx-label urx-label-2"><span class="urx-score urx-red">UBx 23</span></div>
-        <div class="urx-label urx-label-3"><span class="urx-score urx-blue">UBx 87</span></div>
-      </div>
-      <div class="hero-content">
-        <h1>Las marcas más exitosas <strong>crecen</strong> abriendo en los lugares correctos.</h1>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======== MISSION ======== -->
-  <section class="section section-mission">
-    <div class="container">
-      <h2>El motor de expansión y optimización de redes en mercados emergentes.</h2>
-    </div>
-  </section>
-
-  <!-- ======== CTA: ANALYZE ======== -->
-  <section class="section section-cta">
-    <div class="container">
-      <h3>Antes de elegir una ubicación,<br>analiza el territorio.</h3>
-      <a href="agenda.html" class="btn btn-primary btn-lg">Analizar mi próxima ubicación</a>
-    </div>
-  </section>
-
-  <!-- ======== TERRITORY ANALYSIS ======== -->
-  <section class="section-territory">
-    <img src="assets/img/hexagons-bottom.png" alt="" class="bg-hexagons" aria-hidden="true">
-    <div class="container">
-      <div class="territory-card">
-        <p>Urbanalítica analiza el territorio, la economía local y la estructura urbana para <span class="text-bold">identificar dónde un nuevo proyecto realmente tiene potencial y dónde no.</span></p>
+      <p class="kicker rise d1">Inteligencia territorial · México</p>
+      <h1>
+        <span class="rise d2" style="display:block">Un lugar no</span>
+        <span class="rise d3" style="display:block">es un punto.</span>
+        <em class="rise d4" style="display:block">Es todo lo que alcanza<span class="punto">.</span></em>
+      </h1>
+      <p class="hero-lede rise d5">Leemos lo que tus ubicaciones alcanzan — en la esquina, en el barrio, en la ciudad — y lo comparamos contra los lugares que tu sector ya eligió. Una lectura del territorio, antes de cada decisión.</p>
+      <div class="hero-cta rise d5">
+        <a href="agenda.html" class="btn btn--lleno">Quiero ver mi ciudad <span class="flecha">&rarr;</span></a>
+        <a href="login.html" class="btn">Entrar al estudio</a>
       </div>
     </div>
   </section>
 
-  <!-- ======== FEATURES ======== -->
-  <section class="section section-features" id="acerca">
+  <!-- ======== CINTA DE ESCALAS ======== -->
+  <div class="cinta" aria-hidden="true">
+    <div class="cinta-track">
+      <span>la esquina <b>&#11041;</b></span><span>la manzana <b>&#11041;</b></span><span>el barrio <b>&#11041;</b></span><span>la ciudad <b>&#11041;</b></span><span>la región <b>&#11041;</b></span><span>una sola malla <b>&#11041;</b></span>
+      <span>la esquina <b>&#11041;</b></span><span>la manzana <b>&#11041;</b></span><span>el barrio <b>&#11041;</b></span><span>la ciudad <b>&#11041;</b></span><span>la región <b>&#11041;</b></span><span>una sola malla <b>&#11041;</b></span>
+    </div>
+  </div>
+
+  <!-- ======== TESIS ======== -->
+  <section class="tesis" id="acerca">
     <div class="container">
-      <h2 style="text-align:center;">¿Qué hacemos?</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="kicker">La tesis</span>
+      <h2 class="reveal">Los estudios de mercado miden demanda. <strong>Nosotros leemos el territorio.</strong></h2>
+    </div>
+  </section>
+
+  <!-- ======== SALA 01 — LA MALLA ======== -->
+  <section class="sala" id="malla">
+    <div class="container">
+      <div class="sala-copy reveal">
+        <span class="sala-num">01</span>
+        <h3>Un país entero, <em>en una sola malla.</em></h3>
+        <p>Dividimos México en millones de hexágonos — a escala de esquina, de manzana, de barrio, de ciudad y de región. Todos se miden igual, de Tijuana a Mérida.</p>
+        <p>Y un lugar nunca se lee a una sola escala: lo que pasa en la esquina, en el barrio y en la ciudad se lee junto, como capas de una misma huella.</p>
+      </div>
+      <div class="sala-art reveal">
+        <div class="marco"><div id="hexAnidados"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== SALA 02 — LOS CUATRO EJES ======== -->
+  <section class="sala sala--flip" id="ejes">
+    <div class="container">
+      <div class="sala-art reveal">
+        <div class="capas-grid">
+          <div class="capa">
+            <canvas data-capa="gente" aria-label="Textura de puntos: la gente"></canvas>
+            <p class="capa-name">I · La gente</p>
+            <p class="capa-desc">Quién puede llegar caminando, quién vive ahí, quién pasa de largo.</p>
           </div>
-          <h4>Análisis territorial</h4>
-          <p>Evaluamos la estructura urbana, densidad poblacional y accesibilidad de cada zona con datos geoespaciales.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+          <div class="capa">
+            <canvas data-capa="economia" aria-label="Textura de bloques: la economía"></canvas>
+            <p class="capa-name">II · La economía</p>
+            <p class="capa-desc">Qué negocios lo rodean: los que suman y los que compiten.</p>
           </div>
-          <h4>Inteligencia de mercado</h4>
-          <p>Cruzamos variables económicas, demográficas y competitivas para identificar las mejores ubicaciones.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <div class="capa">
+            <canvas data-capa="flujos" aria-label="Textura de corrientes: los flujos"></canvas>
+            <p class="capa-name">III · Los flujos</p>
+            <p class="capa-desc">Los caminos, el transporte, la corriente de la ciudad.</p>
           </div>
-          <h4>Optimización de red</h4>
-          <p>Diseñamos la estrategia de expansión ideal para maximizar cobertura y minimizar canibalización.</p>
+          <div class="capa">
+            <canvas data-capa="suelo" aria-label="Textura de curvas de nivel: el suelo"></canvas>
+            <p class="capa-name">IV · El suelo</p>
+            <p class="capa-desc">Lo que no se ve al firmar: inundación, sismo, la tierra misma.</p>
+          </div>
         </div>
+      </div>
+      <div class="sala-copy reveal">
+        <span class="sala-num">02</span>
+        <h3>Un lugar se lee <em>en cuatro ejes.</em></h3>
+        <p>No preguntamos cuánta gente vive en la colonia. Preguntamos qué alcanza el lugar: quién lo camina, qué lo rodea, qué lo atraviesa y qué lo sostiene.</p>
+        <p>Cada eje se compone de las capas necesarias — población, calles, transporte, suelo — y cada oficio pesa los ejes distinto: una cafetería vive de la gente que pasa; una nave industrial, de los caminos que la conectan.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== SALA 03 — LA LECTURA ======== -->
+  <section class="sala papel" id="lectura">
+    <div class="container">
+      <div class="sala-copy reveal">
+        <span class="sala-num">03</span>
+        <h3>Al final, te entregamos <em>una lectura.</em></h3>
+        <p>Como un examen clínico: medimos lo que tu ubicación alcanza y lo comparamos contra el rango de los lugares donde tu sector ya opera. Se ve de inmediato qué está por encima, qué está por debajo y qué está donde debe.</p>
+        <p>Y cuando una ubicación se ve espléndida pero no alcanza lo que tu operación necesita, la lectura lo revela antes de firmar.</p>
+      </div>
+      <div class="sala-art reveal">
+        <div class="marco"><div id="clinica"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== SALA 04 — LOS GEMELOS ======== -->
+  <section class="sala sala--flip" id="gemelos">
+    <div class="container">
+      <div class="sala-art reveal">
+        <div class="marco"><div id="gemelas"></div></div>
+      </div>
+      <div class="sala-copy reveal">
+        <span class="sala-num">04</span>
+        <h3>Y si ya sabes qué te funciona, <em>lo buscamos en todo el país.</em></h3>
+        <p>Tus mejores ubicaciones tienen una huella. La leemos y buscamos, en cualquier ciudad de México, los lugares que se le parecen — aunque estén en mercados donde nunca has operado.</p>
+        <p>Funciona también hacia adelante: antes de tomar un local en renta o un terreno en venta, evaluamos cómo respondería tu operación en ese punto — sea un listing disponible o una ubicación que identifiquemos por ti.</p>
+        <p><strong>No somos brokers de tierra. Somos la referencia con la que se mide el territorio.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== LA SALA DE PAPEL ======== -->
+  <section class="sala-papel" id="papel">
+    <canvas id="campoPapel" aria-hidden="true"></canvas>
+    <div class="container">
+      <h2 class="reveal">El lugar correcto no se adivina. <em>Se mide.</em></h2>
+      <p class="reveal">Debajo de cada apertura afortunada hay estructura: gente, economía, flujo, suelo. Nosotros la volvemos visible — antes de firmar, no después.</p>
+      <div class="cta reveal">
+        <a href="agenda.html" class="btn btn--tinta">Agenda una lectura <span class="flecha">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== CÓMO SE TRABAJA ======== -->
+  <section class="como papel" id="como">
+    <div class="container">
+      <span class="kicker">Cómo se trabaja</span>
+      <h2>Tres pasos. <em>Ninguno requiere que sepas de datos.</em></h2>
+      <div class="como-grid reveal">
+        <div class="paso">
+          <span class="paso-num">01</span>
+          <h4>Nos cuentas qué haces.</h4>
+          <p>Una cadena de tiendas, un fondo, una red de naves. Cada oficio lee el territorio distinto, y la lectura se calibra a tu operación.</p>
+        </div>
+        <div class="paso">
+          <span class="paso-num">02</span>
+          <h4>Leemos lo que alcanzan tus ubicaciones.</h4>
+          <p>Las que ya operas y las que estás por firmar, comparadas contra los lugares que tu sector ya eligió. Con evidencia de por qué sí — y de por qué no.</p>
+        </div>
+        <div class="paso">
+          <span class="paso-num">03</span>
+          <h4>Y seguimos leyendo.</h4>
+          <p>El territorio cambia cada mes: abre un competidor, llega una línea de transporte, se mueve la ciudad. Tu mapa lo registra primero.</p>
+        </div>
+      </div>
+      <p class="como-nota reveal">Esto es una <strong>suscripción, no un estudio que se archiva</strong>. La lectura sigue viva mientras tu portafolio crece.</p>
+    </div>
+  </section>
+
+  <!-- ======== PARA QUIÉN ======== -->
+  <section class="quien papel" id="quien">
+    <div class="container">
+      <span class="kicker">Para quién</span>
+      <div class="quien-grid reveal">
+        <div class="quien-b">
+          <span class="kicker">Marcas</span>
+          <p>Cadenas que abren sucursales y no pueden darse el lujo de equivocarse de esquina.</p>
+        </div>
+        <div class="quien-b">
+          <span class="kicker">Fondos</span>
+          <p>Inversionistas que necesitan ver el terreno completo antes de comprarlo.</p>
+        </div>
+        <div class="quien-b">
+          <span class="kicker">Gobierno</span>
+          <p>Ciudades que planean con evidencia la ciudad que viene.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== CTA FINAL ======== -->
+  <section class="final" id="contacto">
+    <div class="container">
+      <h2 class="reveal">¿Quieres ver tu ciudad así?</h2>
+      <p class="reveal">La primera lectura se agenda en una llamada de veinte minutos. Trae una dirección que estés evaluando.</p>
+      <div class="final-cta reveal">
+        <a href="agenda.html" class="btn btn--lleno">Agenda una llamada <span class="flecha">&rarr;</span></a>
+        <a href="login.html" class="btn">Ya soy cliente</a>
       </div>
     </div>
   </section>
@@ -123,21 +595,269 @@
   <!-- ======== FOOTER ======== -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-logo">
-        <img src="assets/img/logo.jpg" alt="Urbanalítica">
-      </div>
+      <div class="footer-logo">Urbanalítica<span>.</span></div>
       <div class="footer-links">
         <a href="retail.html">Retail</a>
         <a href="fondos.html">Fondos</a>
         <a href="#acerca">Acerca</a>
-        <a href="agenda.html">Agenda una llamada</a>
-        <a href="login.html">Inicia sesión</a>
+        <a href="agenda.html">Agenda una lectura</a>
+        <a href="login.html">Entrar al estudio</a>
         <a href="aviso-privacidad.html">Aviso de privacidad</a>
       </div>
       <p class="footer-copy">&copy; 2026 Urbanalítica. Todos los derechos reservados.</p>
     </div>
   </footer>
 
-  <script src="js/script.js"></script>
+  <script>
+  /* ============================================================
+     Opción B — arte generativo nocturno. Determinista (seed fija),
+     luz sobre índigo. Adaptado de js/field.js (opción A).
+     ============================================================ */
+  (function () {
+    'use strict';
+    var LUZ = '#F7F5F1', COB = '#8A96E8', COB2 = '#4856B0', TINTA = '#0A0A0A';
+
+    function mulberry32(seed) {
+      return function () {
+        seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+        var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+    function flowAngle(x, y, t) {
+      return Math.sin(x * 0.0042 + t) * 1.1 + Math.cos(y * 0.0051 - t * 0.7) * 0.9 + Math.sin((x + y) * 0.0023 + t * 0.3) * 1.4;
+    }
+    function setup(c) {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = c.getBoundingClientRect();
+      var w = Math.max(r.width, 40), h = Math.max(r.height, 40);
+      c.width = w * dpr; c.height = h * dpr;
+      var x = c.getContext('2d'); x.scale(dpr, dpr);
+      return { ctx: x, w: w, h: h };
+    }
+
+    /* hero: campo de flujo en luz + constelación */
+    function campoNoche(c) {
+      var s = setup(c), ctx = s.ctx, w = s.w, h = s.h;
+      var rnd = mulberry32(1350);
+      var step = 30;
+      for (var x = step / 2; x < w; x += step) {
+        for (var y = step / 2; y < h; y += step) {
+          var fade = Math.min(1, Math.max(0, (x / w - 0.28) * 1.7));
+          if (rnd() > fade) { rnd(); continue; }
+          var a = flowAngle(x, y, 0.6), r = rnd(), len = 5 + r * 10;
+          var tone = rnd();
+          if (tone < 0.62) { ctx.strokeStyle = LUZ; ctx.globalAlpha = 0.10 + r * 0.16; }
+          else if (tone < 0.9) { ctx.strokeStyle = COB; ctx.globalAlpha = 0.2 + r * 0.3; }
+          else { ctx.strokeStyle = LUZ; ctx.globalAlpha = 0.5; }
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(x - Math.cos(a) * len / 2, y - Math.sin(a) * len / 2);
+          ctx.lineTo(x + Math.cos(a) * len / 2, y + Math.sin(a) * len / 2);
+          ctx.stroke();
+          if (rnd() > 0.972) { ctx.globalAlpha = 0.9; ctx.fillStyle = LUZ; ctx.fillRect(x - 1.4, y - 1.4, 2.8, 2.8); }
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    /* sala de papel: campo índigo tenue sobre crema */
+    function campoPapel(c) {
+      var s = setup(c), ctx = s.ctx, w = s.w, h = s.h;
+      var rnd = mulberry32(4856);
+      var cx = w * 0.82, cy = h * 1.1, rays = 70;
+      for (var i = 0; i < rays; i++) {
+        var ang = Math.PI + (i / rays) * Math.PI + (rnd() - 0.5) * 0.02;
+        var rMax = (0.35 + rnd() * 0.7) * Math.max(w, h) * 0.85;
+        var gap = 10 + rnd() * 8;
+        for (var r = 70 + rnd() * 90; r < rMax; r += gap) {
+          var px = cx + Math.cos(ang) * r, py = cy + Math.sin(ang) * r;
+          if (px < -10 || px > w + 10 || py < -10 || py > h + 10) continue;
+          var sz = Math.max(0.6, 2.2 - r / rMax * 1.8);
+          ctx.globalAlpha = 0.08 + (1 - r / rMax) * 0.3 * rnd();
+          ctx.fillStyle = COB2;
+          ctx.fillRect(px - sz / 2, py - sz / 2, sz, sz);
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    /* capas: texturas luz-sobre-índigo */
+    function capa(c, kind) {
+      var s = setup(c), ctx = s.ctx, w = s.w, h = s.h;
+      var rnd = mulberry32(kind.length * 977 + 7);
+      ctx.fillStyle = LUZ; ctx.strokeStyle = LUZ;
+      if (kind === 'gente') {
+        var cl = [[0.3, 0.45], [0.68, 0.35], [0.55, 0.72]];
+        for (var i = 0; i < 620; i++) {
+          var cc = cl[Math.floor(rnd() * cl.length)];
+          var ang = rnd() * Math.PI * 2, rad = Math.pow(rnd(), 1.9) * 0.34;
+          var x = (cc[0] + Math.cos(ang) * rad) * w, y = (cc[1] + Math.sin(ang) * rad * 0.8) * h;
+          if (x < 4 || x > w - 4 || y < 4 || y > h - 4) continue;
+          ctx.globalAlpha = 0.2 + rnd() * 0.55;
+          ctx.beginPath(); ctx.arc(x, y, rnd() < 0.06 ? 2.4 : 1.2, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      if (kind === 'economia') {
+        for (var gx = 0; gx < 14; gx++) for (var gy = 0; gy < 10; gy++) {
+          var cxn = gx / 14 - 0.42, cyn = gy / 10 - 0.45;
+          var dist = Math.sqrt(cxn * cxn + cyn * cyn);
+          if (rnd() > Math.max(0.06, 0.95 - dist * 1.9)) continue;
+          ctx.globalAlpha = 0.12 + rnd() * 0.5;
+          ctx.fillRect(gx * (w / 14) + 3, gy * (h / 10) + 3, 4 + rnd() * (w / 18), 4 + rnd() * (h / 14));
+        }
+      }
+      if (kind === 'flujos') {
+        for (var li = 0; li < 15; li++) {
+          var y0 = (li + 0.5) * (h / 15), amp = 4 + rnd() * 10, ph = rnd() * Math.PI * 2, wgt = rnd();
+          ctx.globalAlpha = 0.18 + wgt * 0.5; ctx.lineWidth = wgt < 0.8 ? 1 : 1.8;
+          ctx.beginPath();
+          for (var x2 = 6; x2 < w - 6; x2 += 4) {
+            var y2 = y0 + Math.sin(x2 * 0.02 + ph) * amp;
+            if (x2 === 6) ctx.moveTo(x2, y2); else ctx.lineTo(x2, y2);
+          }
+          ctx.stroke();
+          if (rnd() > 0.55) { var nx = 20 + rnd() * (w - 40); ctx.globalAlpha = 0.9; ctx.fillRect(nx - 2, y0 - 2 + Math.sin(nx * 0.02 + ph) * amp, 4, 4); }
+        }
+      }
+      if (kind === 'suelo') {
+        var cx3 = w * 0.55, cy3 = h * 0.5;
+        for (var ring = 1; ring <= 9; ring++) {
+          var base = ring * (Math.min(w, h) / 13);
+          ctx.globalAlpha = 0.18 + (1 - ring / 9) * 0.42; ctx.lineWidth = ring === 4 ? 1.6 : 1;
+          ctx.beginPath();
+          for (var a3 = 0; a3 <= Math.PI * 2 + 0.05; a3 += 0.08) {
+            var rr = base + Math.sin(a3 * 3 + ring) * (2 + ring * 1.3) + Math.cos(a3 * 5 - ring) * 2;
+            var px3 = cx3 + Math.cos(a3) * rr * 1.15, py3 = cy3 + Math.sin(a3) * rr * 0.8;
+            if (a3 === 0) ctx.moveTo(px3, py3); else ctx.lineTo(px3, py3);
+          }
+          ctx.stroke();
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    /* malla: 5 hexágonos anidados en luz */
+    function hexAnidados(el) {
+      var W = 640, H = 560, cx = W * 0.44, cy = H * 0.5;
+      var rings = [
+        { r: 232, label: 'la región' }, { r: 170, label: 'la ciudad' },
+        { r: 115, label: 'el barrio' }, { r: 66, label: 'la manzana' }, { r: 28, label: 'la esquina' }
+      ];
+      function hp(r) {
+        var p = [];
+        for (var i = 0; i < 6; i++) { var a = Math.PI / 6 + i * Math.PI / 3; p.push((cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1)); }
+        return p.join(' ');
+      }
+      var tones = ['rgba(247,245,241,0.22)', 'rgba(247,245,241,0.34)', 'rgba(138,150,232,0.6)', '#8A96E8', '#F7F5F1'];
+      var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cinco hexágonos anidados: la región contiene a la ciudad, la ciudad al barrio, el barrio a la manzana, la manzana a la esquina">';
+      for (var i = 0; i < rings.length; i++) {
+        svg += '<polygon points="' + hp(rings[i].r) + '" fill="none" stroke="' + tones[i] + '" stroke-width="' + (i === rings.length - 1 ? 2 : 1.2) + '"/>';
+      }
+      svg += '<polygon points="' + hp(rings[4].r) + '" fill="rgba(138,150,232,0.16)" stroke="#F7F5F1" stroke-width="2"/>';
+      for (var j = 0; j < rings.length; j++) {
+        var a0 = -Math.PI / 12 + j * 0.16;
+        var sx = cx + rings[j].r * Math.cos(a0), sy = cy + rings[j].r * Math.sin(a0);
+        var ly = 82 + j * 48;
+        svg += '<line x1="' + sx.toFixed(1) + '" y1="' + sy.toFixed(1) + '" x2="' + (W - 118) + '" y2="' + ly + '" stroke="rgba(247,245,241,0.35)" stroke-width="0.8"/>';
+        svg += '<circle cx="' + sx.toFixed(1) + '" cy="' + sy.toFixed(1) + '" r="2.4" fill="#F7F5F1"/>';
+        svg += '<text x="' + (W - 110) + '" y="' + (ly + 3) + '" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1" fill="#F7F5F1">' + rings[j].label + '</text>';
+      }
+      svg += '</svg>';
+      el.innerHTML = svg;
+    }
+
+    /* lámina clínica en luz */
+    function clinica(el) {
+      var W = 640, rowH = 96, padX = 8, top = 48;
+      var rows = [
+        { label: 'la gente que alcanza', lo: 0.30, hi: 0.62, med: 0.46, site: 0.74 },
+        { label: 'la economía que lo rodea', lo: 0.40, hi: 0.70, med: 0.55, site: 0.66 },
+        { label: 'los caminos que lo mueven', lo: 0.25, hi: 0.55, med: 0.40, site: 0.58 },
+        { label: 'el suelo que lo sostiene', lo: 0.55, hi: 0.85, med: 0.70, site: 0.40 }
+      ];
+      var H = top + rows.length * rowH, trackW = W - padX * 2;
+      var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lámina clínica: cuatro lecturas del sitio comparadas contra el rango de los lugares donde el sector ya opera">';
+      svg += '<rect x="' + padX + '" y="10" width="10" height="10" fill="#2A3690"/>';
+      svg += '<text x="' + (padX + 16) + '" y="19" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="0.5" fill="#0A0A0A">tu sitio</text>';
+      svg += '<rect x="' + (padX + 92) + '" y="10" width="26" height="10" fill="#DCDDE7"/>';
+      svg += '<text x="' + (padX + 124) + '" y="19" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="0.5" fill="#8A857D">donde tu sector ya opera</text>';
+      for (var i = 0; i < rows.length; i++) {
+        var r = rows[i], y = top + i * rowH + 30, cy = y + 26;
+        svg += '<text x="' + padX + '" y="' + y + '" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.4" fill="#0A0A0A">' + r.label.toUpperCase() + '</text>';
+        svg += '<line x1="' + padX + '" y1="' + cy + '" x2="' + (padX + trackW) + '" y2="' + cy + '" stroke="rgba(10,10,10,0.14)" stroke-width="1"/>';
+        var bx = padX + r.lo * trackW, bw = (r.hi - r.lo) * trackW;
+        svg += '<rect x="' + bx.toFixed(1) + '" y="' + (cy - 8) + '" width="' + bw.toFixed(1) + '" height="16" fill="#DCDDE7"/>';
+        var mx = padX + r.med * trackW;
+        svg += '<line x1="' + mx.toFixed(1) + '" y1="' + (cy - 12) + '" x2="' + mx.toFixed(1) + '" y2="' + (cy + 12) + '" stroke="#737DC0" stroke-width="1.4"/>';
+        var sx = padX + r.site * trackW;
+        svg += '<rect x="' + (sx - 6).toFixed(1) + '" y="' + (cy - 6) + '" width="12" height="12" fill="#2A3690"/>';
+      }
+      svg += '</svg>';
+      el.innerHTML = svg;
+    }
+
+    /* gemelos en luz */
+    function gemelas(el) {
+      var W = 640, H = 320, cardW = 280, cardH = 250, gap = W - cardW * 2;
+      var rnd = mulberry32(3637);
+      var bars = 16, base = [];
+      for (var i = 0; i < bars; i++) base.push(0.25 + rnd() * 0.65);
+      function card(x, title, sub, jitter) {
+        var s = '<rect x="' + x + '" y="20" width="' + cardW + '" height="' + cardH + '" fill="rgba(19,26,69,0.4)" stroke="rgba(247,245,241,0.2)" stroke-width="1"/>';
+        s += '<text x="' + (x + 14) + '" y="44" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6" fill="#F7F5F1">' + title + '</text>';
+        s += '<text x="' + (x + 14) + '" y="60" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1" fill="rgba(247,245,241,0.5)">' + sub + '</text>';
+        var bw = (cardW - 28) / bars;
+        for (var i = 0; i < bars; i++) {
+          var v = base[i] + (jitter ? (rnd() - 0.5) * 0.09 : 0);
+          v = Math.max(0.08, Math.min(0.95, v));
+          var tone = i % 4 === 0 ? '#F7F5F1' : (i % 4 === 1 ? '#8A96E8' : (i % 4 === 2 ? 'rgba(138,150,232,0.6)' : 'rgba(138,150,232,0.32)'));
+          s += '<rect x="' + (x + 14 + i * bw).toFixed(1) + '" y="' + (210 - v * 130).toFixed(1) + '" width="' + (bw - 3).toFixed(1) + '" height="' + (v * 130).toFixed(1) + '" fill="' + tone + '"/>';
+        }
+        s += '<line x1="' + (x + 14) + '" y1="210" x2="' + (x + cardW - 14) + '" y2="210" stroke="#F7F5F1" stroke-width="1"/>';
+        for (var j = 0; j < 4; j++) s += '<circle cx="' + (x + 20 + j * 14) + '" cy="234" r="' + (2 + j * 1.1) + '" fill="none" stroke="#8A96E8" stroke-width="1"/>';
+        return s;
+      }
+      var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Díptico: la huella de una sucursal probada y la de su gemela encontrada en otra ciudad, casi idénticas">';
+      svg += card(0, 'SUCURSAL PROBADA', 'guadalajara · operando', false);
+      svg += '<text x="' + (W / 2) + '" y="150" font-family="IBM Plex Mono, monospace" font-size="22" fill="#8A96E8" text-anchor="middle">&#8776;</text>';
+      svg += card(cardW + gap, 'SU GEMELA', 'm&#233;rida &#183; encontrada', true);
+      svg += '</svg>';
+      el.innerHTML = svg;
+    }
+
+    function init() {
+      var cn = document.getElementById('campoNoche'); if (cn) campoNoche(cn);
+      var cp = document.getElementById('campoPapel'); if (cp) campoPapel(cp);
+      document.querySelectorAll('[data-capa]').forEach(function (c) { capa(c, c.getAttribute('data-capa')); });
+      var hx = document.getElementById('hexAnidados'); if (hx) hexAnidados(hx);
+      var cl = document.getElementById('clinica'); if (cl) clinica(cl);
+      var gm = document.getElementById('gemelas'); if (gm) gemelas(gm);
+
+      var els = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+        }, { threshold: 0.16 });
+        els.forEach(function (el) { io.observe(el); });
+      } else { els.forEach(function (el) { el.classList.add('visible'); }); }
+
+      var mt = document.getElementById('menuToggle'), mn = document.getElementById('mobileNav');
+      if (mt && mn) mt.addEventListener('click', function () { mt.classList.toggle('active'); mn.classList.toggle('active'); });
+
+      var rt;
+      window.addEventListener('resize', function () {
+        clearTimeout(rt);
+        rt = setTimeout(function () {
+          if (cn) campoNoche(cn);
+          if (cp) campoPapel(cp);
+          document.querySelectorAll('[data-capa]').forEach(function (c) { capa(c, c.getAttribute('data-capa')); });
+        }, 180);
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  })();
+  </script>
 </body>
 </html>

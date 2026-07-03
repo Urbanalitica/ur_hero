@@ -4,64 +4,59 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Evalúa tu potencial — Urbanalítica</title>
-  <meta name="description" content="Responde este cuestionario rápido para obtener un análisis inicial sobre el potencial de optimización de tu red.">
+  <meta name="description" content="Responde este cuestionario rápido para obtener una lectura inicial sobre el potencial de optimización de tu red.">
   <meta property="og:title" content="Evalúa tu potencial — Urbanalítica">
-  <meta property="og:description" content="Responde un cuestionario rápido y obtén un análisis inicial sobre el potencial de tu red.">
+  <meta property="og:description" content="Responde un cuestionario rápido y obtén una lectura inicial de tu red.">
   <meta property="og:image" content="https://urbanalitica.com/assets/img/logoUR_B.png">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/styles.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=IBM+Plex+Sans:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/noche.css?v=noche1">
   <link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
 </head>
 <body>
 
   <!-- ======== HEADER ======== -->
-  <header class="header" id="header">
+  <header class="header">
     <div class="container">
-      <a href="index.html" class="logo">
-        <img src="assets/img/logo.jpg" alt="Urbanalítica">
-      </a>
-
+      <a href="index.html" class="logo">Urbanalítica<span>.</span></a>
       <nav class="nav">
         <div class="nav-links">
           <a href="retail.html">Retail</a>
           <a href="fondos.html">Fondos</a>
           <a href="index.html#acerca">Acerca</a>
         </div>
-        <div class="nav-buttons">
-          <a href="login.html" class="btn btn-primary">Inicia tu sesión</a>
-          <a href="agenda.html" class="btn btn-outline">Agenda una llamada</a>
+        <div class="nav-cta">
+          <a href="login.html" class="btn">Entrar al estudio</a>
+          <a href="agenda.html" class="btn btn--lleno">Agenda una lectura</a>
         </div>
       </nav>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
     </div>
   </header>
-
-  <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobileNav">
     <a href="retail.html">Retail</a>
     <a href="fondos.html">Fondos</a>
     <a href="index.html#acerca">Acerca</a>
-    <a href="login.html" class="btn btn-primary btn-lg">Inicia tu sesión</a>
-    <a href="agenda.html" class="btn btn-outline btn-lg">Agenda una llamada</a>
+    <a href="login.html">Entrar al estudio</a>
+    <a href="agenda.html">Agenda una lectura</a>
   </div>
 
-  <!-- ======== PAGE HEADER ======== -->
-  <section class="page-header">
+  <!-- ======== HERO ======== -->
+  <section class="page-hero">
+    <canvas id="campoNoche" data-seed="50" aria-hidden="true"></canvas>
     <div class="container">
-      <h1>¿Está tu ubicación maximizando tus ganancias?</h1>
-      <p>Responde estas preguntas rápidas para obtener un análisis inicial y exclusivo sobre el potencial de optimización de tu red. Solo te tomará 3 minutos.</p>
+      <span class="eyebrow">Evaluación</span>
+      <h1>¿Tus ubicaciones están <strong>a la altura de tu marca?</strong></h1>
+      <p class="lede">Responde estas preguntas rápidas y te devolvemos una lectura inicial del potencial de tu red. Te toma tres minutos.</p>
     </div>
   </section>
 
   <!-- ======== FORM ======== -->
-  <section class="form-section">
+  <section class="section">
     <div class="container">
-      <div class="form-container" style="max-width: 680px;">
+      <div class="form-shell">
         <form id="evaluacionForm" action="https://formsubmit.co/hola@urbanalitica.com" method="POST">
           <input type="hidden" name="_subject" value="Nueva evaluación de potencial retail">
           <input type="hidden" name="_captcha" value="false">
@@ -72,15 +67,15 @@
 
           <!-- Pregunta 1 -->
           <div class="form-group">
-            <label>¿Cuál es tu rol principal en la franquicia/marca?</label>
+            <label>¿Cuál es tu rol principal en la marca?</label>
             <div class="radio-group">
               <label class="radio-option">
                 <input type="radio" name="rol" value="Franquiciador (Dueño de la marca)" required>
-                <span>Franquiciador (Dueño de la marca)</span>
+                <span>Dueño de la marca / franquiciador</span>
               </label>
               <label class="radio-option">
                 <input type="radio" name="rol" value="Franquiciatario (Operador de una o más unidades)">
-                <span>Franquiciatario (Operador de una o más unidades)</span>
+                <span>Operador de una o más unidades</span>
               </label>
               <label class="radio-option">
                 <input type="radio" name="rol" value="Interesado en adquirir una franquicia">
@@ -100,10 +95,10 @@
 
           <!-- Pregunta 2 -->
           <div class="form-group">
-            <label for="unidades">¿Cuántas unidades o puntos de venta tiene actualmente tu red?</label>
+            <label for="unidades">¿Cuántas ubicaciones tiene actualmente tu red?</label>
             <select id="unidades" name="unidades" required>
               <option value="" disabled selected>Selecciona una opción</option>
-              <option value="1 (Unidad Piloto/Inicial)">1 (Unidad Piloto / Inicial)</option>
+              <option value="1 (Unidad Piloto/Inicial)">1 (piloto / inicial)</option>
               <option value="2 a 5">2 a 5</option>
               <option value="6 a 15">6 a 15</option>
               <option value="16 a 50">16 a 50</option>
@@ -113,8 +108,8 @@
 
           <!-- Pregunta 3 -->
           <div class="form-group">
-            <label>¿Qué tan seguro estás de que tus ubicaciones actuales son las óptimas?</label>
-            <p class="form-hint">1 = Pura intuición · 10 = Análisis riguroso</p>
+            <label>¿Qué tan seguro estás de que tus ubicaciones actuales son las correctas?</label>
+            <p class="form-hint">1 = pura intuición · 10 = análisis riguroso</p>
             <div class="range-group">
               <input type="range" id="seguridad" name="seguridad_ubicaciones" min="1" max="10" value="5" oninput="document.getElementById('seguridad-val').textContent = this.value">
               <div class="range-labels">
@@ -127,7 +122,7 @@
 
           <!-- Pregunta 4 -->
           <div class="form-group">
-            <label>¿Cuánto tiempo te lleva actualmente evaluar una nueva ubicación?</label>
+            <label>¿Cuánto tiempo te lleva hoy evaluar una nueva ubicación?</label>
             <div class="radio-group">
               <label class="radio-option">
                 <input type="radio" name="tiempo_evaluacion" value="Menos de 1 semana" required>
@@ -150,15 +145,15 @@
 
           <!-- Pregunta 5 -->
           <div class="form-group">
-            <label>¿Qué herramientas usas para decidir ubicaciones? <span style="font-weight:400; color: var(--color-text-light);">(Selecciona las que apliquen)</span></label>
+            <label>¿Con qué decides hoy tus ubicaciones? <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--luz-45);">(Selecciona las que apliquen)</span></label>
             <div class="checkbox-group">
               <label class="checkbox-option">
                 <input type="checkbox" name="herramientas" value="Google Maps/Herramientas gratuitas">
-                <span>Google Maps / Herramientas gratuitas</span>
+                <span>Google Maps / herramientas gratuitas</span>
               </label>
               <label class="checkbox-option">
                 <input type="checkbox" name="herramientas" value="Conocimiento local/Intuición">
-                <span>Conocimiento local / Intuición</span>
+                <span>Conocimiento local / intuición</span>
               </label>
               <label class="checkbox-option">
                 <input type="checkbox" name="herramientas" value="Estudios de mercado de pago (externos)">
@@ -170,19 +165,19 @@
               </label>
               <label class="checkbox-option">
                 <input type="checkbox" name="herramientas" value="Software de Geomarketing especializado">
-                <span>Software de Geomarketing especializado</span>
+                <span>Software de geomarketing especializado</span>
               </label>
               <label class="checkbox-option">
                 <input type="checkbox" name="herramientas" value="Ninguna, el dueño del local decide">
-                <span>Ninguna, es el dueño del local quien decide</span>
+                <span>Ninguna, decide el dueño del local</span>
               </label>
             </div>
           </div>
 
           <!-- Pregunta 6 -->
           <div class="form-group">
-            <label>Si pudieras obtener un Score de potencial de éxito para cualquier ubicación en segundos, ¿qué tan valioso sería?</label>
-            <p class="form-hint">1 = Poco valioso · 5 = Extremadamente valioso</p>
+            <label>Si pudieras leer el potencial de cualquier ubicación en segundos, ¿qué tan valioso sería?</label>
+            <p class="form-hint">1 = poco valioso · 5 = extremadamente valioso</p>
             <div class="range-group">
               <input type="range" id="valor-score" name="valor_score" min="1" max="5" value="3" oninput="document.getElementById('score-val').textContent = this.value">
               <div class="range-labels">
@@ -193,10 +188,9 @@
             </div>
           </div>
 
-          <!-- Separador -->
-          <hr style="border: none; border-top: 1px solid var(--color-border); margin: 2rem 0;">
+          <hr class="form-divider">
 
-          <p style="font-weight: 500; margin-bottom: 1.5rem; color: var(--color-dark);">Para enviarte tu análisis inicial y una invitación personalizada:</p>
+          <p class="form-lead">Para enviarte tu lectura inicial y una invitación personalizada:</p>
 
           <!-- Datos de contacto -->
           <div class="form-group">
@@ -210,16 +204,16 @@
           </div>
 
           <div class="form-group">
-            <label for="giro">¿En qué tipo de negocio se enfoca tu franquicia?</label>
-            <input type="text" id="giro" name="giro_negocio" placeholder="Ej: Restaurantes, Cafeterías, Servicios...">
+            <label for="giro">¿En qué se enfoca tu negocio?</label>
+            <input type="text" id="giro" name="giro_negocio" placeholder="Ej: restaurantes, cafeterías, servicios...">
           </div>
 
           <div class="form-group">
-            <label for="franquicia">¿Cómo se llama tu franquicia o la que te interesa?</label>
+            <label for="franquicia">¿Cómo se llama tu marca o la que te interesa?</label>
             <input type="text" id="franquicia" name="nombre_franquicia" placeholder="Nombre de la marca">
           </div>
 
-          <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top: 0.5rem;">Enviar y recibir mi análisis</button>
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Enviar y recibir mi lectura <span class="flecha">&rarr;</span></button>
         </form>
       </div>
     </div>
@@ -228,21 +222,20 @@
   <!-- ======== FOOTER ======== -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-logo">
-        <img src="assets/img/logo.jpg" alt="Urbanalítica">
-      </div>
+      <div class="footer-logo">Urbanalítica<span>.</span></div>
       <div class="footer-links">
         <a href="retail.html">Retail</a>
         <a href="fondos.html">Fondos</a>
         <a href="index.html#acerca">Acerca</a>
-        <a href="agenda.html">Agenda una llamada</a>
-        <a href="login.html">Inicia sesión</a>
+        <a href="agenda.html">Agenda una lectura</a>
+        <a href="login.html">Entrar al estudio</a>
         <a href="aviso-privacidad.html">Aviso de privacidad</a>
       </div>
       <p class="footer-copy">&copy; 2026 Urbanalítica. Todos los derechos reservados.</p>
     </div>
   </footer>
 
+  <script src="js/noche.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>

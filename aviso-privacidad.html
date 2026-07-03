@@ -9,78 +9,74 @@
   <meta property="og:description" content="Aviso de privacidad de Urbanalítica.">
   <meta property="og:image" content="https://urbanalitica.com/assets/img/logoUR_B.png">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/styles.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=IBM+Plex+Sans:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/noche.css?v=noche1">
   <link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
 </head>
 <body>
 
   <!-- ======== HEADER ======== -->
-  <header class="header" id="header">
+  <header class="header">
     <div class="container">
-      <a href="index.html" class="logo">
-        <img src="assets/img/logo.jpg" alt="Urbanalítica">
-      </a>
-
+      <a href="index.html" class="logo">Urbanalítica<span>.</span></a>
       <nav class="nav">
         <div class="nav-links">
           <a href="retail.html">Retail</a>
           <a href="fondos.html">Fondos</a>
           <a href="index.html#acerca">Acerca</a>
         </div>
-        <div class="nav-buttons">
-          <a href="login.html" class="btn btn-primary">Inicia tu sesión</a>
-          <a href="agenda.html" class="btn btn-outline">Agenda una llamada</a>
+        <div class="nav-cta">
+          <a href="login.html" class="btn">Entrar al estudio</a>
+          <a href="agenda.html" class="btn btn--lleno">Agenda una lectura</a>
         </div>
       </nav>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
     </div>
   </header>
-
-  <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobileNav">
     <a href="retail.html">Retail</a>
     <a href="fondos.html">Fondos</a>
     <a href="index.html#acerca">Acerca</a>
-    <a href="login.html" class="btn btn-primary btn-lg">Inicia tu sesión</a>
-    <a href="agenda.html" class="btn btn-outline btn-lg">Agenda una llamada</a>
+    <a href="login.html">Entrar al estudio</a>
+    <a href="agenda.html">Agenda una lectura</a>
   </div>
 
-  <!-- ======== AVISO DE PRIVACIDAD ======== -->
-  <section class="page-header">
+  <!-- ======== HERO ======== -->
+  <section class="page-hero">
+    <canvas id="campoNoche" data-seed="900" aria-hidden="true"></canvas>
     <div class="container">
-      <h1>Aviso de Privacidad</h1>
-      <p>Última actualización: marzo 2026</p>
+      <span class="eyebrow">Legal</span>
+      <h1>Aviso de <strong>privacidad.</strong></h1>
+      <p class="lede">Última actualización: marzo 2026</p>
     </div>
   </section>
 
-  <section class="form-section">
+  <!-- ======== CONTENIDO ======== -->
+  <section class="section">
     <div class="container">
-      <div class="form-container" style="max-width: 800px; text-align: left;">
+      <div class="prose">
 
         <h3>1. Responsable del tratamiento de datos</h3>
         <p><strong>Urbanalítica</strong>, con domicilio en Ciudad de México, México, es responsable del tratamiento de sus datos personales conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).</p>
-        <p>Para cualquier consulta relacionada con este aviso, puede contactarnos en: <a href="mailto:hola@urbanalitica.com" style="color: var(--color-primary);">hola@urbanalitica.com</a></p>
+        <p>Para cualquier consulta relacionada con este aviso, puede contactarnos en: <a href="mailto:hola@urbanalitica.com">hola@urbanalitica.com</a></p>
 
         <h3>2. Datos personales que recopilamos</h3>
         <p>Podemos recopilar los siguientes datos personales:</p>
-        <ul style="list-style: disc; padding-left: 1.5rem; margin-bottom: 1.5rem;">
+        <ul>
           <li>Nombre completo</li>
           <li>Correo electrónico</li>
           <li>Número telefónico</li>
           <li>Nombre de empresa o marca</li>
-          <li>Información sobre su red de sucursales o proyecto inmobiliario</li>
+          <li>Información sobre su red de ubicaciones o proyecto inmobiliario</li>
         </ul>
 
         <h3>3. Finalidades del tratamiento</h3>
         <p>Sus datos personales serán utilizados para las siguientes finalidades:</p>
-        <ul style="list-style: disc; padding-left: 1.5rem; margin-bottom: 1.5rem;">
+        <ul>
           <li>Atender solicitudes de contacto y agendar llamadas</li>
-          <li>Proporcionar análisis territoriales y reportes personalizados</li>
+          <li>Proporcionar lecturas territoriales y reportes personalizados</li>
           <li>Gestionar el acceso a nuestra plataforma</li>
           <li>Enviar información relevante sobre nuestros servicios</li>
           <li>Mejorar la experiencia de usuario en nuestro sitio web</li>
@@ -90,8 +86,8 @@
         <p>Urbanalítica no venderá, cederá ni distribuirá sus datos personales a terceros sin su consentimiento, salvo cuando sea requerido por autoridades competentes conforme a la legislación aplicable.</p>
 
         <h3>5. Derechos ARCO</h3>
-        <p>Usted tiene derecho a Acceder, Rectificar, Cancelar u Oponerse al tratamiento de sus datos personales (derechos ARCO). Para ejercer estos derechos, envíe un correo a <a href="mailto:hola@urbanalitica.com" style="color: var(--color-primary);">hola@urbanalitica.com</a> con la siguiente información:</p>
-        <ul style="list-style: disc; padding-left: 1.5rem; margin-bottom: 1.5rem;">
+        <p>Usted tiene derecho a Acceder, Rectificar, Cancelar u Oponerse al tratamiento de sus datos personales (derechos ARCO). Para ejercer estos derechos, envíe un correo a <a href="mailto:hola@urbanalitica.com">hola@urbanalitica.com</a> con la siguiente información:</p>
+        <ul>
           <li>Nombre completo del titular</li>
           <li>Descripción clara del derecho que desea ejercer</li>
           <li>Documentos que acrediten su identidad</li>
@@ -106,7 +102,7 @@
 
         <h3>8. Contacto</h3>
         <p>Si tiene preguntas sobre este aviso de privacidad o sobre el tratamiento de sus datos, contáctenos en:</p>
-        <p><strong>Correo:</strong> <a href="mailto:hola@urbanalitica.com" style="color: var(--color-primary);">hola@urbanalitica.com</a></p>
+        <p><strong>Correo:</strong> <a href="mailto:hola@urbanalitica.com">hola@urbanalitica.com</a></p>
 
       </div>
     </div>
@@ -115,21 +111,19 @@
   <!-- ======== FOOTER ======== -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-logo">
-        <img src="assets/img/logo.jpg" alt="Urbanalítica">
-      </div>
+      <div class="footer-logo">Urbanalítica<span>.</span></div>
       <div class="footer-links">
         <a href="retail.html">Retail</a>
         <a href="fondos.html">Fondos</a>
         <a href="index.html#acerca">Acerca</a>
-        <a href="agenda.html">Agenda una llamada</a>
-        <a href="login.html">Inicia sesión</a>
+        <a href="agenda.html">Agenda una lectura</a>
+        <a href="login.html">Entrar al estudio</a>
         <a href="aviso-privacidad.html">Aviso de privacidad</a>
       </div>
       <p class="footer-copy">&copy; 2026 Urbanalítica. Todos los derechos reservados.</p>
     </div>
   </footer>
 
-  <script src="js/script.js"></script>
+  <script src="js/noche.js"></script>
 </body>
 </html>

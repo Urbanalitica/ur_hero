@@ -13,25 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Mobile menu toggle ---
-  const menuToggle = document.getElementById('menuToggle');
-  const mobileNav = document.getElementById('mobileNav');
-
-  if (menuToggle && mobileNav) {
-    menuToggle.addEventListener('click', () => {
-      menuToggle.classList.toggle('active');
-      mobileNav.classList.toggle('active');
-      document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
-    });
-
-    // Close mobile nav on link click
-    mobileNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
-        mobileNav.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-    });
-  }
+  // NOTE: nav toggle is owned by js/noche.js on the night-museum pages.
+  // Removed here to avoid a double-toggle when both scripts load.
 
   // --- Form submission handler (Agenda) ---
   // Sends via AJAX to FormSubmit so the page doesn't redirect

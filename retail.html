@@ -4,115 +4,118 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Retail — Urbanalítica</title>
-  <meta name="description" content="Descubre cómo Urbanalítica ayuda a las marcas retail a expandirse con inteligencia territorial y datos geoespaciales.">
+  <meta name="description" content="Para marcas que abren puntos de venta en México. Leemos cada candidato en un solo lenguaje — la gente, la economía, los flujos, el suelo — y lo comparamos contra los locales donde tu sector ya opera.">
   <meta property="og:title" content="Retail — Urbanalítica">
-  <meta property="og:description" content="Expansión inteligente para retail con datos geoespaciales.">
+  <meta property="og:description" content="Expansión leída contra el territorio, antes de firmar.">
   <meta property="og:image" content="https://urbanalitica.com/assets/img/logoUR_B.png">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/styles.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=IBM+Plex+Sans:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/noche.css?v=noche1">
   <link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
 </head>
 <body>
 
   <!-- ======== HEADER ======== -->
-  <header class="header" id="header">
+  <header class="header">
     <div class="container">
-      <a href="index.html" class="logo">
-        <img src="assets/img/logo.jpg" alt="Urbanalítica">
-      </a>
-
+      <a href="index.html" class="logo">Urbanalítica<span>.</span></a>
       <nav class="nav">
         <div class="nav-links">
           <a href="retail.html">Retail</a>
           <a href="fondos.html">Fondos</a>
           <a href="index.html#acerca">Acerca</a>
         </div>
-        <div class="nav-buttons">
-          <a href="login.html" class="btn btn-primary">Inicia tu sesión</a>
-          <a href="agenda.html" class="btn btn-outline">Agenda una llamada</a>
+        <div class="nav-cta">
+          <a href="login.html" class="btn">Entrar al estudio</a>
+          <a href="agenda.html" class="btn btn--lleno">Agenda una lectura</a>
         </div>
       </nav>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
     </div>
   </header>
-
-  <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobileNav">
     <a href="retail.html">Retail</a>
     <a href="fondos.html">Fondos</a>
     <a href="index.html#acerca">Acerca</a>
-    <a href="login.html" class="btn btn-primary btn-lg">Inicia tu sesión</a>
-    <a href="agenda.html" class="btn btn-outline btn-lg">Agenda una llamada</a>
+    <a href="login.html">Entrar al estudio</a>
+    <a href="agenda.html">Agenda una lectura</a>
   </div>
 
-  <!-- ======== RETAIL HERO ======== -->
-  <section class="franquicias-hero">
-    <img src="assets/img/map-secondary.png" alt="" class="bg-hexagons" aria-hidden="true">
+  <!-- ======== HERO ======== -->
+  <section class="page-hero">
+    <canvas id="campoNoche" data-seed="150" aria-hidden="true"></canvas>
     <div class="container">
-      <h1>Expansión inteligente para retail</h1>
-      <p>Deja de elegir ubicaciones por intuición. Usa datos reales del territorio para abrir donde tu marca tiene el mayor potencial de éxito.</p>
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        <a href="evaluacion.html" class="btn btn-primary btn-lg">Descubre tu potencial — 3 min</a>
-        <a href="agenda.html" class="btn btn-outline btn-lg">Agenda una llamada</a>
+      <span class="eyebrow">Vertical · Retail</span>
+      <h1>Tres locales en la misma colonia. Uno funciona, dos no. <strong>La diferencia es el territorio.</strong></h1>
+      <p class="lede">Para marcas que abren puntos de venta en México. Leemos cada candidato en un solo lenguaje — la gente que alcanza, la economía que lo rodea, los flujos que lo cruzan y el suelo que lo sostiene — y lo comparamos contra los locales donde tu sector ya opera. Antes de firmar, sabes dónde estás parado.</p>
+      <div class="hero-cta">
+        <a href="evaluacion.html" class="btn btn--lleno">Evalúa una ubicación <span class="flecha">&rarr;</span></a>
+        <a href="agenda.html" class="btn">Agenda una llamada</a>
       </div>
     </div>
   </section>
 
-
-  <!-- ======== BENEFITS ======== -->
+  <!-- ======== CUATRO EJES ======== -->
   <section class="section">
     <div class="container">
-      <h2 style="text-align:center; margin-bottom: 0.5rem;">¿Por qué Urbanalítica?</h2>
-      <p style="text-align:center; color: var(--color-text-light); max-width: 560px; margin: 0 auto;">Combinamos ciencia de datos geoespaciales con conocimiento profundo del retail para ayudarte a crecer.</p>
+      <span class="eyebrow">Qué leemos</span>
+      <h2>Cuatro ejes. <em>Ninguno es un adjetivo.</em></h2>
+      <p class="section-lede">Cada candidato — sucursal que ya operas o predio en negociación — se lee en los mismos cuatro ejes, y cada uno se compone de las capas necesarias. La lectura se calibra al oficio del retail diario: quien vive de la gente que pasa pesa distinto a quien vive de la despensa de la colonia.</p>
 
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <div class="benefit-number">1</div>
-          <h4>Análisis de territorio</h4>
-          <p>Evaluamos la estructura urbana, flujos de movilidad, densidad poblacional y actividad económica de cada zona.</p>
+      <div class="ejes reveal">
+        <div class="eje-card">
+          <span class="eje-num">I</span>
+          <h4>La <em>gente</em></h4>
+          <p>Cuántas personas alcanzan tu puerta caminando: quién vive cerca, quién trabaja cerca y quién pasa de largo. El perfil del entorno, no solo su tamaño.</p>
         </div>
-        <div class="benefit-card">
-          <div class="benefit-number">2</div>
-          <h4>Potencial de mercado</h4>
-          <p>Identificamos el tamaño real del mercado disponible y la demanda insatisfecha en cada micro-zona.</p>
+        <div class="eje-card">
+          <span class="eje-num">II</span>
+          <h4>La <em>economía</em></h4>
+          <p>Qué rodea al local: los negocios que te suman tráfico y los que te compiten. Y si abrir ahí le quita ventas a tu propia red en lugar de sumar.</p>
         </div>
-        <div class="benefit-card">
-          <div class="benefit-number">3</div>
-          <h4>Riesgo de canibalización</h4>
-          <p>Calculamos el impacto de cada nueva sucursal sobre tus puntos existentes para proteger tu red.</p>
+        <div class="eje-card">
+          <span class="eje-num">III</span>
+          <h4>Los <em>flujos</em></h4>
+          <p>Si la calle es un corredor vivo o un fondo de saco. El transporte, las rutas y la corriente que mueve a la ciudad hacia tu esquina o lejos de ella.</p>
         </div>
-        <div class="benefit-card">
-          <div class="benefit-number">4</div>
-          <h4>Plan de expansión</h4>
-          <p>Diseñamos un roadmap de apertura priorizado por potencial, riesgo y retorno de inversión esperado.</p>
+        <div class="eje-card">
+          <span class="eje-num">IV</span>
+          <h4>El <em>suelo</em></h4>
+          <p>Lo que no se ve al firmar: inundación, sismo, la tierra misma. Un riesgo grave no se promedia con lo bueno — pesa sobre la lectura completa.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ======== TERRITORY SECTION ======== -->
-  <section class="section-territory">
-    <img src="assets/img/hexagons-bottom.png" alt="" class="bg-hexagons" aria-hidden="true">
+  <!-- ======== CÓMO ENTREGAMOS ======== -->
+  <section class="section">
     <div class="container">
-      <div class="territory-card">
-        <p>Transformamos datos del territorio en la certeza que necesitas para elegir tu próxima ubicación.</span></p>
+      <span class="eyebrow">Cómo entregamos</span>
+      <h2>Dos lecturas, <em>ninguna reunión para explicarlas.</em></h2>
+      <div class="dual reveal">
+        <div class="dual-block">
+          <span class="eyebrow">Diagnóstico de red</span>
+          <p>Tu red actual, leída contra el territorio. Qué locales se sostienen por su ubicación y cuáles operan a pesar de ella.</p>
+        </div>
+        <div class="dual-block">
+          <span class="eyebrow">Evaluación de candidatos</span>
+          <p>Tus predios en la mesa, ordenados por cómo respondería tu operación en cada uno. El reporte se explica solo.</p>
+        </div>
       </div>
+      <p class="nota reveal">Y no termina en la entrega: el territorio cambia cada mes — abre un competidor, llega una línea de transporte, se mueve la colonia. <strong>Es una suscripción, no un estudio que se archiva.</strong></p>
     </div>
   </section>
 
-  <!-- ======== CTA ======== -->
-  <section class="section-cta-franchise">
+  <!-- ======== CTA FINAL ======== -->
+  <section class="final">
     <div class="container">
-      <h2>¿Listo para crecer con datos?</h2>
-      <p>Responde un cuestionario rápido y obtén un análisis inicial sobre el potencial de optimización de tu red.</p>
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-        <a href="evaluacion.html" class="btn btn-white btn-lg">Descubre tu potencial — 3 min</a>
-        <a href="agenda.html" class="btn btn-white btn-lg" style="background: transparent; border-color: white; color: white;">Agenda una llamada</a>
+      <h2 class="reveal">¿Cuál de tus próximas aperturas quieres leer primero?</h2>
+      <p class="reveal">Trae una dirección que estés evaluando. La primera lectura se agenda en una llamada de veinte minutos.</p>
+      <div class="final-cta reveal">
+        <a href="agenda.html" class="btn btn--lleno">Agenda una llamada <span class="flecha">&rarr;</span></a>
+        <a href="login.html" class="btn">Ya soy cliente</a>
       </div>
     </div>
   </section>
@@ -120,21 +123,19 @@
   <!-- ======== FOOTER ======== -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-logo">
-        <img src="assets/img/logo.jpg" alt="Urbanalítica">
-      </div>
+      <div class="footer-logo">Urbanalítica<span>.</span></div>
       <div class="footer-links">
         <a href="retail.html">Retail</a>
         <a href="fondos.html">Fondos</a>
         <a href="index.html#acerca">Acerca</a>
-        <a href="agenda.html">Agenda una llamada</a>
-        <a href="login.html">Inicia sesión</a>
+        <a href="agenda.html">Agenda una lectura</a>
+        <a href="login.html">Entrar al estudio</a>
         <a href="aviso-privacidad.html">Aviso de privacidad</a>
       </div>
       <p class="footer-copy">&copy; 2026 Urbanalítica. Todos los derechos reservados.</p>
     </div>
   </footer>
 
-  <script src="js/script.js"></script>
+  <script src="js/noche.js"></script>
 </body>
 </html>

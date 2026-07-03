@@ -3,131 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fondos y Desarrolladores Inmobiliarios — Urbanalítica</title>
-  <meta name="description" content="Urbanalítica brinda inteligencia territorial a fondos de inversión y desarrolladores inmobiliarios para tomar decisiones basadas en datos.">
-  <meta property="og:title" content="Fondos y Desarrolladores — Urbanalítica">
-  <meta property="og:description" content="Inteligencia territorial para fondos de inversión y desarrolladores inmobiliarios.">
+  <title>Fondos y desarrolladores — Urbanalítica</title>
+  <meta name="description" content="Para fondos que invierten en inmobiliario y desarrolladores que firman antes de saber. Cada predio del país leído en dos planos: qué tan bien responde al uso y qué tan firme es la tierra que lo sostiene.">
+  <meta property="og:title" content="Fondos y desarrolladores — Urbanalítica">
+  <meta property="og:description" content="La lectura del activo, antes del cierre.">
   <meta property="og:image" content="https://urbanalitica.com/assets/img/logoUR_B.png">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/styles.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=IBM+Plex+Sans:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/noche.css?v=noche1">
   <link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
 </head>
 <body>
 
   <!-- ======== HEADER ======== -->
-  <header class="header" id="header">
+  <header class="header">
     <div class="container">
-      <a href="index.html" class="logo">
-        <img src="assets/img/logo.jpg" alt="Urbanalítica">
-      </a>
-
+      <a href="index.html" class="logo">Urbanalítica<span>.</span></a>
       <nav class="nav">
         <div class="nav-links">
           <a href="retail.html">Retail</a>
           <a href="fondos.html">Fondos</a>
           <a href="index.html#acerca">Acerca</a>
         </div>
-        <div class="nav-buttons">
-          <a href="login.html" class="btn btn-primary">Inicia tu sesión</a>
-          <a href="agenda.html" class="btn btn-outline">Agenda una llamada</a>
+        <div class="nav-cta">
+          <a href="login.html" class="btn">Entrar al estudio</a>
+          <a href="agenda.html" class="btn btn--lleno">Agenda una lectura</a>
         </div>
       </nav>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
     </div>
   </header>
-
-  <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobileNav">
     <a href="retail.html">Retail</a>
     <a href="fondos.html">Fondos</a>
     <a href="index.html#acerca">Acerca</a>
-    <a href="login.html" class="btn btn-primary btn-lg">Inicia tu sesión</a>
-    <a href="agenda.html" class="btn btn-outline btn-lg">Agenda una llamada</a>
+    <a href="login.html">Entrar al estudio</a>
+    <a href="agenda.html">Agenda una lectura</a>
   </div>
 
-  <!-- ======== FONDOS HERO ======== -->
-  <section class="franquicias-hero">
-    <img src="assets/img/map-secondary.png" alt="" class="bg-hexagons" aria-hidden="true">
+  <!-- ======== HERO ======== -->
+  <section class="page-hero">
+    <canvas id="campoNoche" data-seed="1350" aria-hidden="true"></canvas>
     <div class="container">
-      <h1>Inteligencia territorial para fondos y desarrolladores inmobiliarios</h1>
-      <p>Evalúa el potencial real de cada ubicación antes de invertir. Datos geoespaciales y análisis urbano para decisiones de inversión más inteligentes.</p>
-      <a href="agenda.html" class="btn btn-primary btn-lg">Agenda una llamada</a>
+      <span class="eyebrow">Vertical · Fondos</span>
+      <h1>Antes de comprar el terreno, <strong>mide la tierra.</strong></h1>
+      <p class="lede">Para fondos que invierten en inmobiliario y desarrolladores que firman antes de saber. Leemos cada predio del país en dos planos: qué tan bien responde al uso que le quieres dar, y qué tan firme es la tierra que lo sostiene. La lectura del activo, antes del cierre.</p>
+      <div class="hero-cta">
+        <a href="agenda.html" class="btn btn--lleno">Agenda una llamada <span class="flecha">&rarr;</span></a>
+        <a href="login.html" class="btn">Entrar al estudio</a>
+      </div>
     </div>
   </section>
 
-  <!-- ======== BENEFITS ======== -->
+  <!-- ======== QUÉ ENTREGAMOS ======== -->
   <section class="section">
     <div class="container">
-      <h2 style="text-align:center; margin-bottom: 0.5rem;">¿Por qué Urbanalítica?</h2>
-      <p style="text-align:center; color: var(--color-text-light); max-width: 560px; margin: 0 auto;">Convertimos territorio en datos accionables para maximizar el retorno de tu portafolio inmobiliario.</p>
+      <span class="eyebrow">Qué entregamos</span>
+      <h2>Cuatro lecturas. <em>Una decisión.</em></h2>
+      <p class="section-lede">Sin proyecciones de ingresos ni pronósticos de absorción. Lo que sí hacemos: leer el predio en el mismo lenguaje con el que tu comité ya compara mercados — de Monterrey a Mérida, un solo filtro.</p>
 
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <div class="benefit-number">1</div>
-          <h4>Due diligence territorial</h4>
-          <p>Análisis profundo de la zona: demografía, movilidad, actividad económica y tendencias de crecimiento urbano antes de cada inversión.</p>
+      <div class="ejes reveal">
+        <div class="eje-card">
+          <span class="eje-num">I</span>
+          <h4>Aptitud de <em>uso</em></h4>
+          <p>Qué tan bien responde el predio al uso que buscas — comercio, oficinas, vivienda, logística. Y si pierde, en qué eje pierde y por cuánto.</p>
         </div>
-        <div class="benefit-card">
-          <div class="benefit-number">2</div>
-          <h4>Valoración por potencial comercial</h4>
-          <p>Cuantificamos la demanda real del entorno para proyectar ingresos y ocupación comercial con datos, no supuestos.</p>
+        <div class="eje-card">
+          <span class="eje-num">II</span>
+          <h4>Firmeza del <em>suelo</em></h4>
+          <p>Sismo, inundación, deslave, la tierra misma. Un riesgo grave no se diluye en un promedio: pesa sobre la lectura completa del activo.</p>
         </div>
-        <div class="benefit-card">
-          <div class="benefit-number">3</div>
-          <h4>Identificación de zonas de oportunidad</h4>
-          <p>Detectamos micro-territorios con alto potencial de desarrollo donde la oferta aún no cubre la demanda existente.</p>
+        <div class="eje-card">
+          <span class="eje-num">III</span>
+          <h4>Comparabilidad <em>nacional</em></h4>
+          <p>El mismo método para cualquier ciudad de México. Todo tu deal flow pasa por un solo filtro, sin pelearte con metodologías locales.</p>
         </div>
-        <div class="benefit-card">
-          <div class="benefit-number">4</div>
-          <h4>Optimización de portafolio</h4>
-          <p>Evaluamos tu cartera actual de activos inmobiliarios para identificar oportunidades de reposicionamiento o desinversión.</p>
+        <div class="eje-card">
+          <span class="eje-num">IV</span>
+          <h4>Lectura de <em>portafolio</em></h4>
+          <p>Tus activos contra el territorio. Cuáles se sostienen por su ubicación y cuáles a pesar de ella. Insumo para vender, reposicionar o ampliar.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ======== TERRITORY SECTION ======== -->
-  <section class="section-territory">
-    <img src="assets/img/hexagons-bottom.png" alt="" class="bg-hexagons" aria-hidden="true">
+  <!-- ======== PARA QUIÉN / CÓMO ======== -->
+  <section class="section">
     <div class="container">
-      <div class="territory-card">
-        <p>Cada hexágono representa un micro-territorio con variables económicas, demográficas y urbanas. <span class="text-bold">Así es como transformamos ubicaciones en decisiones de inversión respaldadas por datos.</span></p>
+      <span class="eyebrow">Cómo trabajamos</span>
+      <h2>Días para un predio. <em>Semanas para un portafolio.</em></h2>
+      <div class="dual reveal">
+        <div class="dual-block">
+          <span class="eyebrow">Para quién</span>
+          <p>Fondos que compran terreno. Desarrolladores que miden antes de firmar. Family offices con tesis territorial.</p>
+        </div>
+        <div class="dual-block">
+          <span class="eyebrow">Cómo trabajamos</span>
+          <p>Una lectura de predio en días. Un portafolio completo en un par de semanas. Sin reuniones de una hora para explicar lo que un mapa muestra en diez segundos.</p>
+        </div>
       </div>
+      <p class="nota reveal">Y la lectura sigue viva mientras tu portafolio se mueve. <strong>Es una suscripción, no un estudio que se archiva.</strong></p>
     </div>
   </section>
 
-  <!-- ======== CTA ======== -->
-  <section class="section-cta-franchise">
+  <!-- ======== CTA FINAL ======== -->
+  <section class="final">
     <div class="container">
-      <h2>¿Listo para invertir con datos?</h2>
-      <p>Agenda una llamada con nuestro equipo y descubre cómo la inteligencia territorial potencia tu portafolio.</p>
-      <a href="agenda.html" class="btn btn-white btn-lg">Agenda una llamada</a>
+      <h2 class="reveal">¿Qué activo quieres leer primero?</h2>
+      <p class="reveal">Trae un predio o un portafolio en la mesa. La primera lectura se agenda en una llamada de veinte minutos.</p>
+      <div class="final-cta reveal">
+        <a href="agenda.html" class="btn btn--lleno">Agenda una llamada <span class="flecha">&rarr;</span></a>
+        <a href="login.html" class="btn">Ya soy cliente</a>
+      </div>
     </div>
   </section>
 
   <!-- ======== FOOTER ======== -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-logo">
-        <img src="assets/img/logo.jpg" alt="Urbanalítica">
-      </div>
+      <div class="footer-logo">Urbanalítica<span>.</span></div>
       <div class="footer-links">
         <a href="retail.html">Retail</a>
         <a href="fondos.html">Fondos</a>
         <a href="index.html#acerca">Acerca</a>
-        <a href="agenda.html">Agenda una llamada</a>
-        <a href="login.html">Inicia sesión</a>
+        <a href="agenda.html">Agenda una lectura</a>
+        <a href="login.html">Entrar al estudio</a>
         <a href="aviso-privacidad.html">Aviso de privacidad</a>
       </div>
       <p class="footer-copy">&copy; 2026 Urbanalítica. Todos los derechos reservados.</p>
     </div>
   </footer>
 
-  <script src="js/script.js"></script>
+  <script src="js/noche.js"></script>
 </body>
 </html>

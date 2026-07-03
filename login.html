@@ -3,47 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicia sesión — Urbanalítica</title>
-  <meta name="description" content="Accede a la plataforma de Urbanalítica para analizar territorios y gestionar tu red de sucursales.">
-  <meta property="og:title" content="Inicia sesión — Urbanalítica">
-  <meta property="og:description" content="Accede a la plataforma de Urbanalítica.">
+  <title>Entrar al estudio — Urbanalítica</title>
+  <meta name="description" content="Accede al estudio de Urbanalítica: tu portafolio leído contra el territorio, cada mes.">
+  <meta property="og:title" content="Entrar al estudio — Urbanalítica">
+  <meta property="og:description" content="Accede al estudio de Urbanalítica.">
   <meta property="og:image" content="https://urbanalitica.com/assets/img/logoUR_B.png">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/styles.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=IBM+Plex+Sans:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/noche.css?v=noche1">
   <link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
 </head>
 <body>
 
-  <div class="login-page">
-    <div class="login-card">
-      <a href="index.html" class="logo">
-        <img src="assets/img/logo.jpg" alt="Urbanalítica">
-      </a>
+  <div class="login-split">
 
-      <h2>Inicia sesión</h2>
-      <p class="subtitle">Accede a tu panel de análisis territorial</p>
-
-      <form id="loginForm" action="#" method="POST">
-        <div class="form-group">
-          <label for="email">Correo electrónico</label>
-          <input type="email" id="email" name="email" placeholder="tu@empresa.com" required>
-        </div>
-
-        <div class="form-group">
-          <label for="password">Contraseña</label>
-          <input type="password" id="password" name="password" placeholder="••••••••" required>
-          <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-lg">Iniciar sesión</button>
-      </form>
-
-      <div class="login-footer">
-        <p>¿No tienes una cuenta? <a href="agenda.html">Solicita acceso</a></p>
+    <!-- Panel cobalto — la sala de entrada -->
+    <aside class="login-panel">
+      <div class="panel-field" aria-hidden="true">
+        <canvas id="panelField"></canvas>
       </div>
-    </div>
+      <a href="index.html" class="logo">Urbanalítica<span>.</span></a>
+      <p class="panel-tagline">El territorio, leído <em>cada mes.</em></p>
+      <p class="panel-caption">Estudio · acceso a clientes</p>
+    </aside>
+
+    <!-- Formulario -->
+    <main class="login-side">
+      <div class="login-card">
+        <span class="eyebrow">Entrar al estudio</span>
+        <h2>Tu lectura <em>te espera.</em></h2>
+        <p class="subtitle">Tu portafolio, tus mapas y tus lecturas — donde los dejaste.</p>
+
+        <form id="loginForm" action="#" method="POST">
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="tu@empresa.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
+            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg">Iniciar sesión <span class="flecha">&rarr;</span></button>
+          <p id="loginError" class="login-error"></p>
+        </form>
+
+        <div class="login-footer">
+          <p>¿Aún no tienes acceso? <a href="agenda.html">Agenda una lectura</a></p>
+        </div>
+
+        <p class="login-back"><a href="index.html">&larr; Volver al sitio</a></p>
+      </div>
+    </main>
+
   </div>
 
-  <script src="js/script.js"></script>
+  <script src="js/noche.js"></script>
+  <script>
+    // ── Urbanalitica Studio login ─────────────────────────────────────────────
+    // Configura estas URLs según el entorno de deploy:
+    var STUDIO_API_URL  = "http://localhost:8001";   // FastAPI
+    var STUDIO_APP_URL  = "http://localhost:3000";   // Next.js frontend
+
+    document.getElementById("loginForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      var email    = document.getElementById("email").value.trim();
+      var password = document.getElementById("password").value;
+      var btn      = this.querySelector("button[type=submit]");
+      var errBox   = document.getElementById("loginError");
+
+      btn.disabled    = true;
+      btn.textContent = "Ingresando...";
+      if (errBox) errBox.style.display = "none";
+
+      try {
+        var res = await fetch(STUDIO_API_URL + "/auth/login", {
+          method:  "POST",
+          headers: { "Content-Type": "application/json" },
+          body:    JSON.stringify({ email: email, password: password }),
+        });
+
+        if (!res.ok) {
+          var err = await res.json().catch(function() { return {}; });
+          throw new Error(err.detail || "Credenciales incorrectas");
+        }
+
+        var data = await res.json();
+
+        // Guardar token con las mismas claves que usa Studio (lib/api.ts)
+        localStorage.setItem("studio_token", data.access_token);
+        localStorage.setItem("studio_user", JSON.stringify({
+          user_id: data.user_id,
+          email:   data.email,
+          role:    data.role,
+        }));
+
+        // Redirigir al dashboard según rol
+        var dest = data.role === "admin"
+          ? STUDIO_APP_URL + "/admin/dashboard"
+          : STUDIO_APP_URL + "/client";
+
+        window.location.href = dest;
+
+      } catch (err) {
+        btn.disabled    = false;
+        btn.textContent = "Iniciar sesión";
+        errBox.textContent  = err.message || "Error de conexión";
+        errBox.style.display = "block";
+      }
+    });
+  </script>
 </body>
 </html>
