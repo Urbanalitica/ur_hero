@@ -611,6 +611,7 @@
 
   <script src="js/campo-h3.js?v=1"></script>
   <script src="js/malla-scanner.js?v=2"></script>
+  <script src="js/capas-h3.js?v=1"></script>
   <script>
   /* ============================================================
      Opción B — arte generativo nocturno. Determinista (seed fija),
@@ -833,7 +834,7 @@
     function init() {
       var cn = document.getElementById('campoNoche'); if (cn && window.initCampoH3) initCampoH3(cn); else if (cn) campoNoche(cn);
       var cp = document.getElementById('campoPapel'); if (cp) campoPapel(cp);
-      document.querySelectorAll('[data-capa]').forEach(function (c) { capa(c, c.getAttribute('data-capa')); });
+      document.querySelectorAll('[data-capa]').forEach(function (c) { if (window.initCapa) initCapa(c, c.getAttribute('data-capa')); else capa(c, c.getAttribute('data-capa')); });
       var hx = document.getElementById('mallaScanner'); if (hx && window.initMallaScanner) initMallaScanner(hx);
       var cl = document.getElementById('clinica'); if (cl) clinica(cl);
       var gm = document.getElementById('gemelas'); if (gm) gemelas(gm);
@@ -854,7 +855,6 @@
         clearTimeout(rt);
         rt = setTimeout(function () {
           if (cp) campoPapel(cp);
-          document.querySelectorAll('[data-capa]').forEach(function (c) { capa(c, c.getAttribute('data-capa')); });
         }, 180);
       });
     }
