@@ -450,7 +450,7 @@
         <p>Y un lugar nunca se lee a una sola escala: lo que pasa en la esquina, en el barrio y en la ciudad se lee junto, como capas de una misma huella.</p>
       </div>
       <div class="sala-art reveal">
-        <div class="marco"><div id="hexAnidados"></div></div>
+        <div class="marco"><canvas id="mallaScanner" style="aspect-ratio:64/52;width:100%;display:block" aria-label="Malla hexagonal nacional recorrida por un barrido de lectura que resuelve cada celda a escala fina"></canvas></div>
       </div>
     </div>
   </section>
@@ -610,6 +610,7 @@
   </footer>
 
   <script src="js/campo-h3.js"></script>
+  <script src="js/malla-scanner.js"></script>
   <script>
   /* ============================================================
      Opción B — arte generativo nocturno. Determinista (seed fija),
@@ -833,7 +834,7 @@
       var cn = document.getElementById('campoNoche'); if (cn && window.initCampoH3) initCampoH3(cn); else if (cn) campoNoche(cn);
       var cp = document.getElementById('campoPapel'); if (cp) campoPapel(cp);
       document.querySelectorAll('[data-capa]').forEach(function (c) { capa(c, c.getAttribute('data-capa')); });
-      var hx = document.getElementById('hexAnidados'); if (hx) hexAnidados(hx);
+      var hx = document.getElementById('mallaScanner'); if (hx && window.initMallaScanner) initMallaScanner(hx);
       var cl = document.getElementById('clinica'); if (cl) clinica(cl);
       var gm = document.getElementById('gemelas'); if (gm) gemelas(gm);
 
