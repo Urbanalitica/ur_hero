@@ -37,7 +37,7 @@
       var r = cv.getBoundingClientRect();
       W = Math.max(r.width, 40); H = Math.max(r.height, 40);
       cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      PX = W * 0.58; PY = H * 0.50; WMAX = Math.max(2500, Math.hypot(W, H) * 1.15);
+      PX = W * 0.58; PY = H * 0.54; WMAX = Math.max(2500, Math.hypot(W, H) * 1.15);
     }
     resize();
 
