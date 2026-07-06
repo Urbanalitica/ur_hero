@@ -179,13 +179,6 @@
       overflow:hidden;
     }
     #campoNoche { position:absolute; inset:0; width:100%; height:100%; opacity:0; animation:fadein 1600ms 300ms var(--ease) forwards; }
-    /* hexágono orbital — atmósfera, casi imperceptible */
-    .hex-orbita {
-      position:absolute; right:-14vw; top:50%; width:56vw; height:56vw;
-      margin-top:-28vw; opacity:0.16;
-      animation: girar 240s linear infinite;
-      pointer-events:none;
-    }
     .hero .container { position:relative; z-index:2; }
     .hero h1 {
       font-family: var(--serif);
@@ -416,10 +409,6 @@
   <!-- ======== HERO ======== -->
   <section class="hero">
     <canvas id="campoNoche" aria-hidden="true"></canvas>
-    <svg class="hex-orbita" viewBox="0 0 100 100" aria-hidden="true">
-      <polygon points="50,3 92,26.5 92,73.5 50,97 8,73.5 8,26.5" fill="none" stroke="#8A96E8" stroke-width="0.25"/>
-      <polygon points="50,17 80,33.5 80,66.5 50,83 20,66.5 20,33.5" fill="none" stroke="#8A96E8" stroke-width="0.2"/>
-    </svg>
     <div class="container">
       <p class="kicker rise d1">Inteligencia territorial · México</p>
       <h1>
