@@ -2,7 +2,7 @@
 // Debe estar restringida por referrer (https://www.urbanalitica.com/*) y sólo a Maps JavaScript API.
 // Obligatoria: vacía → no se dibuja el mapa, sólo el panel con indicadores y tablas.
 // Para probar en local, crea config.local.js (ignorado por git) con:  window.UR_GMAPS_KEY = "…";
-window.UR_GMAPS_KEY = window.UR_GMAPS_KEY || "";
+window.UR_GMAPS_KEY = window.UR_GMAPS_KEY || "AIzaSyCiWUZ9fGKgDAIMl_rdMr6pTo_z192DrP8";
 
 // Analítica sin cookies: código del sitio en GoatCounter (el «xxx» de https://xxx.goatcounter.com).
 // Vacío → no se carga nada. No usa cookies ni guarda IP, así que no requiere banner.
