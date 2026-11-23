@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Áreas verdes del Valle de México — Urbanalítica</title>
+  <meta name="description" content="El verde de los 77 municipios de la Zona Metropolitana del Valle de México medido igual en los tres estados: espacio público, camellones, cerros y barrancas, copa arbórea y la regla de los 300 metros.">
+  <meta property="og:title" content="Áreas verdes del Valle de México — Urbanalítica">
+  <meta property="og:description" content="Ciudad de México, Estado de México e Hidalgo medidos con el mismo satélite y la misma regla de 300 metros.">
+  <meta property="og:image" content="https://www.urbanalitica.com/assets/img/og-image.png">
+  <meta property="og:url" content="https://www.urbanalitica.com/areas-verdes/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=IBM+Plex+Sans:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=27">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+</head>
+<body>
+  <header class="tira">
+    <a href="../index.html" class="logo" aria-label="Urbanalítica, inicio">Urbanalítica<span>.</span></a>
+    <span class="tira__serie">Serie · Ordenamiento · 01 Áreas verdes · Valle de México</span>
+  </header>
+
+  <main class="lienzo">
+    <div id="mapa" class="mapa" role="application" aria-label="Mapa satelital de áreas verdes del Valle de México"></div>
+    <div id="mapaAviso" class="mapa__aviso" hidden></div>
+    <div class="acciones">
+      <button type="button" id="btnDelicadas" class="boton boton--rojo revelar" aria-pressed="false">Revelar zonas más críticas</button>
+      <button type="button" id="btnComparar" class="boton boton--negro revelar" aria-pressed="false" aria-controls="grupoZonas">Comparar zonas</button>
+      <div class="acciones__grupo" id="grupoZonas" hidden>
+        <button type="button" id="btnRezagadas" class="boton boton--rojo revelar" aria-pressed="false" aria-controls="rezagoLista">Las 10 más rezagadas</button>
+        <button type="button" id="btnMedianas" class="boton boton--azul revelar" aria-pressed="false" aria-controls="rezagoLista">Las 10 medianas</button>
+        <button type="button" id="btnVerdes" class="boton boton--verde revelar" aria-pressed="false" aria-controls="rezagoLista">Las 10 privilegiadas</button>
+      </div>
+    </div>
+    <div id="rezagoLista" class="rezago-lista" hidden></div>
+    <div id="leyendas" class="leyendas" aria-label="Leyendas">
+      <div id="leyendaDens" class="leyenda-copa" hidden>
+        <span class="leyenda-copa__titulo">Dónde vive la gente</span>
+        <span class="leyenda-copa__rampa leyenda-copa__rampa--6"><i style="background:#2166AC"></i><i style="background:#67A9CF"></i><i style="background:#D1E5F0"></i><i style="background:#FDDBC7"></i><i style="background:#EF8A62"></i><i style="background:#B2182B"></i></span>
+        <span class="rango" data-rango="densidad" style="--n:6"><input type="range" min="0" max="6" step="1" value="0" aria-label="Desde"><input type="range" min="0" max="6" step="1" value="6" aria-label="Hasta"></span>
+        <span class="leyenda-copa__cortes"><span>0</span><span>25</span><span>75</span><span>150</span><span>225</span><span>300 hab/ha</span></span>
+        <span class="leyenda-copa__nota">Habitantes por hectárea en cada hexágono (Censo 2020). Azul: poca gente · rojo: mucha. Va debajo del verde. Desliza o toca un tono para filtrar.</span>
+      </div>
+      <div id="leyendaCopaHab" class="leyenda-copa" hidden>
+        <span class="leyenda-copa__titulo">m² de copa por habitante</span>
+        <span class="leyenda-copa__rampa leyenda-copa__rampa--6"><i style="background:#B2182B"></i><i style="background:#EF8A62"></i><i style="background:#FDDBC7"></i><i style="background:#D9F0D3"></i><i style="background:#7FBF7B"></i><i style="background:#1B7837"></i></span>
+        <span class="rango" data-rango="copaHab" style="--n:6"><input type="range" min="0" max="6" step="1" value="0" aria-label="Desde"><input type="range" min="0" max="6" step="1" value="6" aria-label="Hasta"></span>
+        <span class="leyenda-copa__cortes"><span>0</span><span>1</span><span>3</span><span>6</span><span>12</span><span>25 m²</span></span>
+        <span class="leyenda-copa__nota">Copa de árboles de 3 m o más en cada hexágono, entre la gente que vive ahí (hexágonos con 50 habitantes o más). Rojo: lo más rezagado · verde: más copa por persona. Desliza o toca un tono para filtrar.</span>
+      </div>
+      <div id="leyendaHueco" class="leyenda-copa" hidden>
+        <span class="leyenda-copa__titulo">Sin verde a 300 m</span>
+        <span class="leyenda-copa__rampa leyenda-copa__rampa--4"><i style="background:rgba(0,0,0,.3)"></i><i style="background:rgba(0,0,0,.48)"></i><i style="background:rgba(0,0,0,.66)"></i><i style="background:rgba(0,0,0,.84)"></i></span>
+        <span class="rango" data-rango="hueco" style="--n:4"><input type="range" min="0" max="4" step="1" value="0" aria-label="Desde"><input type="range" min="0" max="4" step="1" value="4" aria-label="Hasta"></span>
+        <span class="leyenda-copa__cortes"><span>300 m</span><span>500</span><span>750</span><span>1 km</span><span>más</span></span>
+        <span class="leyenda-copa__nota">Distancia en línea recta al espacio público verde, cerro, barranca, bosque o campo más cercano. Desliza o toca un tono para filtrar.</span>
+      </div>
+      <div id="leyendaDelicada" class="leyenda-copa" hidden>
+        <span class="leyenda-copa__titulo">Zonas críticas</span>
+        <span class="leyenda-grav"></span>
+        <span class="rango" data-rango="delicada" style="--n:4"><input type="range" min="0" max="4" step="1" value="0" aria-label="Desde"><input type="range" min="0" max="4" step="1" value="4" aria-label="Hasta"></span>
+        <span class="leyenda-copa__cortes leyenda-grav__cortes"><span>10 %</span><span>5 %</span><span>0 %</span></span>
+        <span class="leyenda-copa__nota">Verde en el entorno. Amarillo: en atención · rojo: crítica</span>
+      </div>
+      <div id="leyendaVHex" class="leyenda-copa" hidden>
+        <span class="leyenda-copa__titulo">Verde por hexágono</span>
+        <span class="leyenda-copa__rampa leyenda-copa__rampa--6"><i style="background:#E8DFC0"></i><i style="background:#D3D9B0"></i><i style="background:#A3BC7E"></i><i style="background:#6E9655"></i><i style="background:#3D6131"></i><i style="background:#24401D"></i></span>
+        <span class="rango" data-rango="verdeHex" style="--n:6"><input type="range" min="0" max="6" step="1" value="0" aria-label="Desde"><input type="range" min="0" max="6" step="1" value="6" aria-label="Hasta"></span>
+        <span class="leyenda-copa__cortes"><span>0</span><span>5</span><span>10</span><span>20</span><span>40</span><span>60 %</span></span>
+        <span class="leyenda-copa__nota">Todo lo verde: parques, camellones, barrancas, arboledas</span>
+      </div>
+      <div id="leyendaCopa" class="leyenda-copa" hidden>
+        <span class="leyenda-copa__titulo">Copa arbórea</span>
+        <span class="leyenda-copa__rampa"><i style="background:#EDE6CF"></i><i style="background:#D3D9B0"></i><i style="background:#A3BC7E"></i><i style="background:#6E9655"></i><i style="background:#3D6131"></i></span>
+        <span class="rango" data-rango="copa" style="--n:5"><input type="range" min="0" max="5" step="1" value="0" aria-label="Desde"><input type="range" min="0" max="5" step="1" value="5" aria-label="Hasta"></span>
+        <span class="leyenda-copa__cortes"><span>0</span><span>5</span><span>10</span><span>20</span><span>30 %</span></span>
+        <span class="leyenda-copa__nota">30 % es la meta de la regla 3-30-300. Con los hexágonos prendidos, desliza o toca un color para filtrarlos.</span>
+      </div>
+      <div id="leyendaVerde" class="leyenda-copa" hidden>
+        <span class="leyenda-copa__titulo">Verdor satelital (NDVI)</span>
+        <span class="leyenda-copa__rampa leyenda-copa__rampa--6"><i style="background:#D9E4A6"></i><i style="background:#AFCB7C"></i><i style="background:#86B05E"></i><i style="background:#5E8C45"></i><i style="background:#3F6B32"></i><i style="background:#244A1F"></i></span>
+        <span class="leyenda-copa__cortes"><span>0.2</span><span>0.4</span><span>0.6</span><span>0.8</span></span>
+        <span class="leyenda-copa__nota">Sentinel-2, septiembre a noviembre de 2026</span>
+      </div>
+    </div>
+
+    <aside class="panel" id="panel">
+      <button class="panel__asa" id="panelAsa" aria-expanded="true" aria-controls="panelCuerpo">Capas e indicadores</button>
+      <div class="panel__cuerpo" id="panelCuerpo">
+        <section class="bloque bloque--verde">
+          <h1>¿Cuánta área verde tienes cerca?</h1>
+          <p>En el Valle de México viven <b id="kPob">—</b> millones de personas, entre la Ciudad de México, el Estado de México e Hidalgo. Medimos cuánto verde tiene cerca cada una, de la misma forma en los tres estados.</p>
+          <p>Una regla muy usada en ciudades del mundo pide un parque o área verde a menos de 300 metros de casa, unos 4 minutos a pie. <b id="kSinPct">—</b> de la gente del valle no lo tiene. La misma regla pide que los árboles cubran 30 % del barrio; aquí cubren <b id="kCopa">—</b>.</p>
+          <p><b id="kDelicada">—</b> personas viven donde casi todo lo que las rodea es concreto: menos de 5 % es verde. Son las zonas críticas que marca el mapa.</p>
+        </section>
+
+        <section class="bloque bloque--blanco comparar" id="comparar" hidden>
+          <h2>Comparar zonas</h2>
+          <div id="compararCuerpo"></div>
+        </section>
+
+        <section class="bloque bloque--blanco">
+          <h2>Por estado</h2>
+          <table class="tabla" id="tablaEstados">
+            <thead><tr><th></th><th>m² de espacio público por hab.</th><th>Sin verde a 300 m</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <p class="nota" id="notaEstados"></p>
+          <h3 class="tabla__titulo">Copa de los árboles</h3>
+          <table class="tabla" id="tablaCopa">
+            <thead><tr><th></th><th>Copa donde vive la gente</th><th>m² por hab.</th><th>Personas con menos de 5 %</th><th>Gente con &lt; 5 %</th><th>5 a 10 %</th><th>10 a 30 %</th><th>30 % o más</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <p class="nota" id="notaCopa"></p>
+        </section>
+
+        <section class="bloque bloque--blanco">
+          <h2>Tu derecho a 300 metros</h2>
+          <p class="nota">La regla 3-30-300 pide un espacio verde a no más de 300 m de cada casa. Ubícate y lo medimos.</p>
+          <button class="boton boton--negro" id="btnUbicacion">Usar mi ubicación</button>
+          <p class="nota">También puedes hacer clic en cualquier punto del mapa.</p>
+          <div id="resultadoUbicacion" class="resultado" hidden></div>
+        </section>
+
+        <section class="bloque bloque--blanco">
+          <h2>Capas</h2>
+          <details class="grupo">
+            <summary>Dónde vive la gente <small class="grupo__n"></small></summary>
+            <fieldset class="capas">
+              <legend class="sr">Dónde vive la gente</legend>
+              <label class="capa"><input type="checkbox" data-capa="densidad"><span class="muestra" style="background:#FDDBC7"></span>Densidad de población por hexágono</label>
+            </fieldset>
+          </details>
+          <details class="grupo">
+            <summary>Verde, árboles y zonas críticas <small class="grupo__n"></small></summary>
+            <fieldset class="capas">
+              <legend class="sr">Verde, árboles y zonas críticas</legend>
+              <button type="button" class="apagar" data-apagar>Apagar todas</button>
+              <label class="capa"><input type="checkbox" data-capa="verde"><span class="muestra muestra--verdesat"></span>Todo lo verde que ve el satélite <small id="nVerdeSat"></small></label>
+              <label class="capa"><input type="checkbox" data-capa="copaRaster"><span class="muestra muestra--copa"></span>Copa arbórea, a detalle</label>
+              <label class="capa"><input type="checkbox" data-capa="verdeHex"><span class="muestra muestra--copa"></span>Verde por hexágono</label>
+              <label class="capa"><input type="checkbox" data-capa="copa"><span class="muestra muestra--copa"></span>Copa arbórea por hexágono</label>
+              <a class="descarga" href="data/zmvm/descargas/verde_copa_hex_res9_zmvm.gpkg" download>Descargar hexágonos con verde y copa (GeoPackage)</a>
+              <label class="capa"><input type="checkbox" data-capa="delicada"><span class="muestra muestra--delicada"></span>Zonas críticas <small id="nDelicada"></small></label>
+            </fieldset>
+          </details>
+          <details class="grupo">
+            <summary>Regla de 300 m y referencias <small class="grupo__n"></small></summary>
+            <fieldset class="capas">
+              <legend class="sr">Regla de 300 m</legend>
+              <button type="button" class="apagar" data-apagar>Apagar todas</button>
+              <label class="capa"><input type="checkbox" data-capa="hueco" checked><span class="muestra muestra--hueco"></span>Sin verde a 300 m</label>
+              <label class="capa"><input type="checkbox" data-capa="copaHab" checked><span class="muestra" style="background:linear-gradient(90deg,#B2182B,#FDDBC7,#1B7837)"></span>m² de copa arbórea por habitante</label>
+              <label class="capa"><input type="checkbox" data-capa="inventario"><span class="muestra muestra--inventario"></span>Inventario oficial SEDEMA (sólo CDMX)</label>
+              <label class="capa"><input type="checkbox" data-capa="estados" checked><span class="muestra muestra--estados"></span>Límites estatales</label>
+              <label class="capa"><input type="checkbox" data-capa="municipios" checked><span class="muestra muestra--alcaldias"></span>Municipios y alcaldías</label>
+            </fieldset>
+          </details>
+          <details class="grupo">
+            <summary>Mapa de fondo <small class="grupo__n"></small></summary>
+            <fieldset class="capas">
+              <legend class="sr">Mapa de fondo</legend>
+              <div class="selector selector--plano" role="radiogroup" aria-label="Mapa de fondo">
+                <span class="selector__titulo">Fondo</span>
+                <label><input type="radio" name="imagen" value="carto_claro" checked> CARTO claro</label>
+                <label><input type="radio" name="imagen" value="carto_oscuro"> CARTO oscuro</label>
+                <label><input type="radio" name="imagen" value="carto_voyager"> CARTO Voyager</label>
+                <label><input type="radio" name="imagen" value="hybrid"> Google</label>
+                <label><input type="radio" name="imagen" value="esri"> Esri</label>
+                <label><input type="radio" name="imagen" value="roadmap"> Calles</label>
+              </div>
+            </fieldset>
+          </details>
+        </section>
+
+        <section class="bloque bloque--blanco">
+          <h2>Por municipio</h2>
+          <div class="selector selector--plano" role="radiogroup" aria-label="Estado">
+            <label><input type="radio" name="filtroEstado" value="" checked> Todos</label>
+            <label><input type="radio" name="filtroEstado" value="09"> CDMX</label>
+            <label><input type="radio" name="filtroEstado" value="15"> Edomex</label>
+            <label><input type="radio" name="filtroEstado" value="13"> Hidalgo</label>
+          </div>
+          <div class="selector" role="radiogroup" aria-label="Indicador por municipio" style="margin-top:12px">
+            <label><input type="radio" name="indicador" value="copa_pct" checked> % de copa arbórea donde vive la gente</label>
+            <label><input type="radio" name="indicador" value="m2hab_publico"> m² de espacio público verde por habitante</label>
+            <label><input type="radio" name="indicador" value="m2hab_verde_sat"> m² de verde satelital por habitante, en la ciudad</label>
+            <label><input type="radio" name="indicador" value="pct_sin"> % sin verde a 300 m</label>
+            <label><input type="radio" name="indicador" value="verde300"> % de verde en el entorno de cada casa</label>
+            <label><input type="radio" name="indicador" value="pob_delicada"> Personas en zonas críticas</label>
+          </div>
+          <ol class="barras" id="barras"></ol>
+          <p class="nota" id="notaIndicador"></p>
+        </section>
+
+        <section class="bloque bloque--gris">
+          <h2>Cómo se hizo</h2>
+          <p class="nota">Buscamos <b>dónde vive gente con casi nada verde cerca</b>.</p>
+          <ol class="pasos">
+            <li><b>Juntamos todo lo verde</b>, público o privado: parques, plazas, camellones y glorietas de OpenStreetMap; cerros, barrancas y bosques de INEGI; el campo que rodea la ciudad (lo que queda fuera de las localidades INEGI 2024: cultivo, bosque, matorral); y la vegetación y los árboles que ve el satélite, incluidas las banquetas arboladas.</li>
+            <li><b>Partimos el valle en hexágonos</b> de unos 350 m de ancho y medimos qué porcentaje de cada uno es verde. Es la capa «Verde por hexágono».</li>
+            <li><b>Calificamos cada casa por su entorno</b>, no sólo por su hexágono: el parque que te toca puede estar cruzando la calle, en el hexágono de al lado. El entorno es tu hexágono más los seis que lo rodean, lo que caminas en unos 4 minutos. Si en ese entorno lo verde no llega a 5 % y ahí vive gente, es <b>zona crítica</b>; de 5 a 10 %, <b>en atención</b>.</li>
+          </ol>
+          <figure class="figura">
+            <svg class="diagrama" viewBox="0 0 184 176" role="img" aria-label="Ejemplo: una casa en un hexágono con 2 % de verde y seis vecinos con 20, 0, 1, 3, 0 y 4 %. Promedio 4.3 %: zona crítica." font-family="IBM Plex Sans, Arial, sans-serif"><polygon points="169.9,103.0 144.0,118.0 118.0,103.0 118.0,73.0 144.0,58.0 169.9,73.0" fill="#6E9655" stroke="#FFFFFF" stroke-width="1.5"/><text x="144.0" y="88.0" text-anchor="middle" font-size="12" font-weight="600" fill="#FFFFFF">20 %</text><text x="144.0" y="101.0" text-anchor="middle" font-size="8.5" fill="#FFFFFF">parque</text><polygon points="144.0,148.0 118.0,163.0 92.0,148.0 92.0,118.0 118.0,103.0 144.0,118.0" fill="#E8DFC0" stroke="#FFFFFF" stroke-width="1.5"/><text x="118.0" y="137.0" text-anchor="middle" font-size="12" font-weight="600" fill="#1F1F1F">0 %</text><polygon points="92.0,148.0 66.0,163.0 40.0,148.0 40.0,118.0 66.0,103.0 92.0,118.0" fill="#E8DFC0" stroke="#FFFFFF" stroke-width="1.5"/><text x="66.0" y="137.0" text-anchor="middle" font-size="12" font-weight="600" fill="#1F1F1F">1 %</text><polygon points="66.0,103.0 40.0,118.0 14.1,103.0 14.1,73.0 40.0,58.0 66.0,73.0" fill="#E8DFC0" stroke="#FFFFFF" stroke-width="1.5"/><text x="40.0" y="92.0" text-anchor="middle" font-size="12" font-weight="600" fill="#1F1F1F">3 %</text><polygon points="92.0,58.0 66.0,73.0 40.0,58.0 40.0,28.0 66.0,13.0 92.0,28.0" fill="#E8DFC0" stroke="#FFFFFF" stroke-width="1.5"/><text x="66.0" y="47.0" text-anchor="middle" font-size="12" font-weight="600" fill="#1F1F1F">0 %</text><polygon points="144.0,58.0 118.0,73.0 92.0,58.0 92.0,28.0 118.0,13.0 144.0,28.0" fill="#E8DFC0" stroke="#FFFFFF" stroke-width="1.5"/><text x="118.0" y="47.0" text-anchor="middle" font-size="12" font-weight="600" fill="#1F1F1F">4 %</text><polygon points="118.0,103.0 92.0,118.0 66.0,103.0 66.0,73.0 92.0,58.0 118.0,73.0" fill="#E8DFC0" stroke="#1F1F1F" stroke-width="2.5"/><text x="92.0" y="88.0" text-anchor="middle" font-size="12" font-weight="600" fill="#1F1F1F">2 %</text><text x="92.0" y="101.0" text-anchor="middle" font-size="8.5" fill="#1F1F1F">tu casa</text><circle cx="92" cy="88" r="68.5" fill="none" stroke="#1F1F1F" stroke-dasharray="3 3" stroke-width="1"/></svg>
+            <figcaption><b>Ejemplo.</b> Tu hexágono tiene 2 % de verde y uno de al lado tiene un parque (20 %). Sumamos los siete: 2 + 20 + 0 + 1 + 3 + 0 + 4 = 30, y entre 7 da <b>4.3 %</b>. Es menos de 5 %: <b>zona crítica</b>. Un parque al lado no basta si todo lo demás es concreto.</figcaption>
+          </figure>
+          <p class="nota">Los cortes de 5 y 10 % son nuestros, propuestos para discusión. La ficha de cada hexágono muestra la cifra de su entorno.</p>
+          <p class="nota">La capa «Sin verde a 300 m» es otra medida: la distancia en línea recta de cada manzana del Censo 2020 al parque, cerro o camellón más cercano. El valle son 77 municipios: las 16 alcaldías, 59 del Estado de México y Tizayuca y Atotonilco de Tula en Hidalgo.</p>
+          <p class="nota" id="fuentes"></p>
+        </section>
+      </div>
+    </aside>
+
+    <article class="rezago" id="rezago" hidden role="dialog" aria-label="Ficha de zona">
+      <div class="rezago__barra"><p class="rezago__titulo" id="rezagoTitulo"></p><button type="button" class="rezago__min" id="rezagoMin" aria-expanded="true">Minimizar</button><button class="rezago__cerrar" id="rezagoCerrar" aria-label="Cerrar ficha">×</button></div>
+      <div id="rezagoCuerpo"></div>
+    </article>
+    <article class="ficha" id="ficha" hidden aria-live="polite">
+      <button class="ficha__cerrar" id="fichaCerrar" aria-label="Cerrar ficha">×</button>
+      <div id="fichaCuerpo"></div>
+    </article>
+  </main>
+
+  <script src="config.js?v=2"></script>
+  <script src="config.local.js?v=2" onerror="void 0"></script>
+  <script src="zmvm.js?v=57"></script>
+</body>
+</html>
