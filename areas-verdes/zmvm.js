@@ -4,7 +4,7 @@
   "use strict";
 
   var DATA = "data/zmvm/";
-  var VER = "?v=20261123w";
+  var VER = "?v=20261124a";
 
   /* Analítica sin cookies (GoatCounter). Sólo cuenta visitas y qué se usa de la página:
      capas, opciones, municipio elegido, descargas. Nunca coordenadas, IP ni datos de la persona.
@@ -203,6 +203,55 @@
     return cv;
   };
   CapaDens.prototype.releaseTile = function () {};
+  /* Capas de hexágonos en canvas (copa por hab., copa, verde por hexágono y sin verde a 300 m).
+     Antes eran capas de Google con un polígono por hexágono (18,000 a 21,700 cada una) y el
+     teléfono se quedaba sin memoria. Cada color va en un solo trazo: sin costuras entre celdas. */
+  function CapaCanvas(nombre, items, estilo) { this.tileSize = new google.maps.Size(256, 256); this.name = nombre; this.maxZoom = 21; this.items = items; this.estilo = estilo; }
+  CapaCanvas.prototype.getTile = function (c, z, doc) {
+    var cv = doc.createElement("canvas"); cv.width = cv.height = 256;
+    var its = this.items();
+    if (!its) return cv;
+    var k = Math.pow(2, z), x0 = c.x * 256 / k, y0 = c.y * 256 / k, x1 = x0 + 256 / k, y1 = y0 + 256 / k, g = cv.getContext("2d");
+    var grupos = {}, est = this.estilo;
+    its.forEach(function (h) {
+      if (h.b[2] < x0 || h.b[0] > x1 || h.b[3] < y0 || h.b[1] > y1) return;
+      var e = est(h);
+      if (!e) return;
+      var key = e.c + "|" + e.a + "|" + (e.s || "");
+      (grupos[key] = grupos[key] || { e: e, hs: [] }).hs.push(h);
+    });
+    Object.keys(grupos).forEach(function (key) {
+      var G = grupos[key];
+      g.beginPath();
+      G.hs.forEach(function (h) { h.p.forEach(function (q, i) { var px = (q[0] - x0) * k, py = (q[1] - y0) * k; if (i) g.lineTo(px, py); else g.moveTo(px, py); }); g.closePath(); });
+      g.globalAlpha = G.e.a; g.fillStyle = G.e.c; g.fill();
+      if (G.e.s && z >= 12) { g.globalAlpha = 0.5; g.strokeStyle = G.e.s; g.lineWidth = 0.6; g.stroke(); }
+    });
+    return cv;
+  };
+  CapaCanvas.prototype.releaseTile = function () {};
+  var hexGeo = null, huecoGeo = null;
+  function shim(p) { return { getProperty: function (k) { return p[k]; } }; }
+  function geoDe(anillo) {
+    var pts = anillo.map(function (q) { return mundo(q[1], q[0]); });
+    var xs = pts.map(function (q) { return q[0]; }), ys = pts.map(function (q) { return q[1]; });
+    return { p: pts, b: [Math.min.apply(null, xs), Math.min.apply(null, ys), Math.max.apply(null, xs), Math.max.apply(null, ys)] };
+  }
+  function prepararHexCanvas(gj) {
+    hexGeo = gj.features.map(function (f) { var g = geoDe(f.geometry.coordinates[0]); g.prop = f.properties; g.f = shim(f.properties); return g; });
+    ["copaHab", "copa", "verdeHex"].forEach(refrescar);
+  }
+  function prepararHuecoCanvas() {
+    if (!huecoData || huecoGeo) return;
+    huecoGeo = [];
+    huecoData.celdas.forEach(function (cs, k) {
+      window.h3.uncompactCells(cs, huecoData.res).forEach(function (c) {
+        var g = geoDe(window.h3.cellToBoundary(c, true)); g.f = shim({ banda: k }); g.banda = k; huecoGeo.push(g);
+      });
+    });
+    refrescar("hueco");
+  }
+  function refrescar(k) { if (map && estado.capas[k]) { overlay(k, false); overlay(k, true); } }
   function prepararDens(gj) {
     densHex = gj.features.filter(function (f) { return f.properties.pob > 0; }).map(function (f) {
       var p = f.geometry.coordinates[0].map(function (q) { return mundo(q[1], q[0]); });
@@ -244,6 +293,18 @@
     mosaicos.verde = new Mosaico("verde", 0.9);
     mosaicos.copaRaster = new Mosaico("copa", 0.9);
     mosaicos.densidad = new CapaDens();
+    mosaicos.copaHab = new CapaCanvas("copaHab", function () { return hexGeo; }, function (h) {
+      return h.prop.copa_hab != null && pasa("copaHab", h.f) ? { c: RAMPA_COPAHAB[BIN.copaHab(h.f)][1], a: 0.8, s: "#FFFFFF" } : null;
+    });
+    mosaicos.copa = new CapaCanvas("copa", function () { return hexGeo; }, function (h) {
+      return h.prop.copa != null && pasa("copa", h.f) ? { c: colorCopa(h.prop.copa), a: 0.78 } : null;
+    });
+    mosaicos.verdeHex = new CapaCanvas("verdeHex", function () { return hexGeo; }, function (h) {
+      return h.prop.verde_pct != null && pasa("verdeHex", h.f) ? { c: colorVHex(h.prop.verde_pct), a: 0.8, s: "#FFFFFF" } : null;
+    });
+    mosaicos.hueco = new CapaCanvas("hueco", function () { return huecoGeo; }, function (h) {
+      return pasa("hueco", h.f) ? { c: C.negro, a: HUECO_OPAC[h.banda] || 0.5 } : null;
+    });
 
     ["municipios", "estados", "hueco", "verdeHex", "copa", "copaHab", "delicada", "naturales", "restringido", "verde", "inv"].forEach(function (k) { capasData[k] = new google.maps.Data(); });
     capasData.municipios.setStyle({ fillOpacity: 0, strokeColor: C.blanco, strokeWeight: 1, strokeOpacity: 0.75, clickable: false, zIndex: 0 });
@@ -275,18 +336,21 @@
 
     capasData.municipios.loadGeoJson(DATA + "municipios.geojson" + VER);
     capasData.estados.loadGeoJson(DATA + "estados.geojson" + VER);
-    fetch(DATA + "sin_cobertura_300m_h3.json" + VER).then(function (r) { return r.json(); }).then(function (d) { return conH3(function () { huecoData = d; pintarHueco(); }); });
+    fetch(DATA + "sin_cobertura_300m_h3.json" + VER).then(function (r) { return r.json(); }).then(function (d) { return conH3(function () { huecoData = d; prepararHuecoCanvas(); }); });
     /* las capas vectoriales (espacio público, cerros, camellones, restringido) ya no se publican:
        las zonas críticas y «Sin verde a 300 m» se midieron con ellas y las resumen */
 
     capasData.verde.addListener("click", function (e) { abrirFicha(propiedades(e.feature), e.latLng); });
     capasData.restringido.addListener("click", function (e) { abrirFicha(propiedades(e.feature), e.latLng); });
     capasData.naturales.addListener("click", function (e) { var p = propiedades(e.feature); p.cls = "naturales"; abrirFicha(p, e.latLng); });
-    capasData.copa.addListener("click", function (e) { abrirHex(propiedades(e.feature), e.latLng); });
     capasData.delicada.addListener("click", function (e) { abrirHex(propiedades(e.feature), e.latLng); });
-    capasData.copaHab.addListener("click", function (e) { abrirHex(propiedades(e.feature), e.latLng); });
-    capasData.verdeHex.addListener("click", function (e) { abrirHex(propiedades(e.feature), e.latLng); });
-    map.addListener("click", function (e) { evaluarPunto(e.latLng.lat(), e.latLng.lng(), false); });
+    map.addListener("click", function (e) {
+      var s = estado.capas, la = e.latLng.lat(), ln = e.latLng.lng();
+      var p = (s.copaHab || s.copa || s.verdeHex) && window.h3 ? hexPorId[window.h3.latLngToCell(la, ln, 9)] : null;
+      var f = p && shim(p);
+      if (p && ((s.copaHab && p.copa_hab != null && pasa("copaHab", f)) || (s.copa && p.copa != null && pasa("copa", f)) || (s.verdeHex && p.verde_pct != null && pasa("verdeHex", f)))) { abrirHex(p, e.latLng); return; }
+      evaluarPunto(la, ln, false);
+    });
     aplicarVisibilidad();
     if (/[?&]debug\b/.test(location.search)) window.__av = { map: map, capas: capasData, objetivos: objetivos, estado: estado, evaluarPunto: evaluarPunto, abrirFicha: abrirFicha, aplicar: aplicarVisibilidad };
   }
@@ -331,14 +395,36 @@
       return { visible: pasa("hueco", f), fillColor: C.negro, fillOpacity: HUECO_OPAC[f.getProperty("banda")] || 0.5, strokeWeight: 0, clickable: false, zIndex: 0 };
     });
   }
+  var ORDEN_OV = ["densidad", "verde", "copaRaster", "hueco", "verdeHex", "copa", "copaHab"];
+  function claveDe(m) { for (var q in mosaicos) if (mosaicos[q] === m) return q; return null; }
   function overlay(k, on) {
     var arr = map.overlayMapTypes, i = arr.getArray().indexOf(mosaicos[k]);
-    if (on && i < 0) { if (k === "densidad") arr.insertAt(0, mosaicos[k]); else arr.push(mosaicos[k]); }
     if (!on && i >= 0) arr.removeAt(i);
+    if (on && i < 0) {
+      var r = ORDEN_OV.indexOf(k), pos = 0;
+      arr.getArray().forEach(function (m, j) { if (ORDEN_OV.indexOf(claveDe(m)) < r) pos = j + 1; });
+      arr.insertAt(pos, mosaicos[k]);
+    }
+  }
+  /* Cada capa de hexágonos recibe sólo lo que dibuja y sólo al prenderse la primera vez:
+     antes las cuatro cargaban los 21,700 hexágonos y el teléfono se quedaba sin memoria. */
+  var hexGJ = null, hexLleno = {};
+  var HEX_FILTRO = { delicada: function (p) { return p.delicada > 0; } };
+  function llenarHex() {
+    if (!hexGJ) return;
+    Object.keys(HEX_FILTRO).forEach(function (k) {
+      if (!estado.capas[k] || hexLleno[k]) return;
+      hexLleno[k] = true;
+      capasData[k].addGeoJson({ type: "FeatureCollection", features: hexGJ.features.filter(function (f) { return HEX_FILTRO[k](f.properties); }) });
+    });
   }
   function aplicarVisibilidad() {
     var s = estado.capas;
-    estiloVerde(); estiloHueco(); pintarHueco();
+    llenarHex();
+    /* re-estilar obliga a Google a redibujar todos los polígonos: sólo cuando cambia algo que el estilo usa */
+    var firmaV = JSON.stringify([s.publico, s.naturales, s.vial, s.restringido]), firmaH = JSON.stringify(filtro.hueco);
+    if (firmaV !== aplicarVisibilidad.v) { aplicarVisibilidad.v = firmaV; estiloVerde(); }
+    if (firmaH !== aplicarVisibilidad.h) { aplicarVisibilidad.h = firmaH; refrescar("hueco"); }
     cargarUnaVez("hex", function () { // siempre: también alimenta «Tu derecho a 300 metros»
       fetch(DATA + "hex.json" + VER).then(function (r) { return r.json(); }).then(function (d) {
         return conH3(function (h3) {
@@ -349,14 +435,15 @@
             return { type: "Feature", properties: p, geometry: { type: "Polygon", coordinates: [h3.cellToBoundary(p.h, true)] } };
           }) };
           gj.features.forEach(function (f) { hexPorId[f.properties.h] = f.properties; });
-          capasData.copa.addGeoJson(gj); capasData.delicada.addGeoJson(gj); capasData.verdeHex.addGeoJson(gj); capasData.copaHab.addGeoJson(gj);
+          hexGJ = gj; llenarHex(); prepararHexCanvas(gj);
           prepararDens(gj);
         });
       });
     });
     if (s.restringido) cargarUnaVez("restringido", function () { capasData.restringido.loadGeoJson(DATA + "restringido.geojson" + VER); });
     if (s.inventario) cargarUnaVez("inv", function () { capasData.inv.loadGeoJson("data/inventario.geojson"); });
-    ["hueco", "naturales", "verdeHex", "copa", "copaHab", "delicada", "restringido", "estados", "municipios"].forEach(function (k) { capasData[k].setMap(s[k] ? map : null); });
+    ["naturales", "delicada", "restringido", "estados", "municipios"].forEach(function (k) { capasData[k].setMap(s[k] ? map : null); });
+    overlay("hueco", s.hueco); overlay("verdeHex", s.verdeHex); overlay("copa", s.copa); overlay("copaHab", s.copaHab);
     capasData.verde.setMap(s.publico || s.vial ? map : null);
     capasData.inv.setMap(s.inventario ? map : null);
     overlay("densidad", s.densidad); overlay("verde", s.verde); overlay("copaRaster", s.copaRaster);
@@ -603,7 +690,7 @@
     else t = "Lo verde pasa de 10 % de su entorno.";
     var corte = p.pob >= 50 ? [5, 10].map(function (c) { return Math.abs(v - c); }).sort(function (x, y) { return x - y; })[0] : 99;
     if (corte < 1) t += " Está a menos de un punto del corte.";
-    h += '<section class="ficha__seccion"><p class="nota">' + t + " Cada hexágono mide 10.5 ha.</p></section>";
+    h += '<section class="ficha__seccion"><p class="nota">' + t + " Cada hexágono mide 12 ha.</p></section>";
     h += botonesRevision(ll.lat().toFixed(6), ll.lng().toFixed(6));
     mostrarFicha(h);
   }
@@ -658,7 +745,7 @@
         cuadros.forEach(function (c, i) { c.classList.toggle("fuera", i < a || i >= b); });
         if (rampa && rampa.classList.contains("leyenda-grav")) rampa.style.setProperty("--a", a / n * 100 + "%"), rampa.style.setProperty("--b", b / n * 100 + "%");
         if (capasData[k] && capasData[k].getStyle()) capasData[k].setStyle(capasData[k].getStyle());
-        if (k === "densidad" && map && estado.capas.densidad) { overlay("densidad", false); overlay("densidad", true); }
+        if (mosaicos[k] && map && estado.capas[k]) { overlay(k, false); overlay(k, true); }
       };
       ins.forEach(function (i) { i.addEventListener("input", aplicar); i.addEventListener("change", function () { medir("filtro/" + k); }); });
       cuadros.forEach(function (c, i) {
