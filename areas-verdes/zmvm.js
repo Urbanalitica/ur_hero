@@ -4,7 +4,7 @@
   "use strict";
 
   var DATA = "data/zmvm/";
-  var VER = "?v=20261123r";
+  var VER = "?v=20261123v";
 
   /* Analítica sin cookies (GoatCounter). Sólo cuenta visitas y qué se usa de la página:
      capas, opciones, municipio elegido, descargas. Nunca coordenadas, IP ni datos de la persona.
@@ -439,8 +439,8 @@
   function evaluarPunto(lat, lng, centrar) {
     if (marcaUbic) marcaUbic.setMap(null);
     if (circuloUbic) circuloUbic.setMap(null);
-    marcaUbic = new google.maps.Marker({ map: map, position: { lat: lat, lng: lng }, clickable: false, icon: { path: google.maps.SymbolPath.CIRCLE, scale: 6, fillColor: C.verde, fillOpacity: 1, strokeColor: C.blanco, strokeWeight: 2 } });
-    circuloUbic = new google.maps.Circle({ map: map, center: { lat: lat, lng: lng }, radius: 300, clickable: false, fillOpacity: 0, strokeColor: C.blanco, strokeWeight: 2 });
+    marcaUbic = new google.maps.Marker({ map: map, position: { lat: lat, lng: lng }, clickable: false, zIndex: 1000, icon: { path: google.maps.SymbolPath.CIRCLE, scale: 6, fillColor: C.verde, fillOpacity: 1, strokeColor: C.blanco, strokeWeight: 2 } });
+    circuloUbic = new google.maps.Circle({ map: map, center: { lat: lat, lng: lng }, radius: 300, clickable: false, zIndex: 1000, fillOpacity: 0, strokeColor: C.blanco, strokeWeight: 3 });
     if (centrar) { map.panTo({ lat: lat, lng: lng }); map.setZoom(16); }
     var r = $("resultadoUbicacion");
     r.hidden = false;
@@ -510,14 +510,51 @@
     });
   }
 
+  /* Se llama directo desde el toque (Safari sólo pide permiso dentro del gesto). Si el mapa aún no carga, espera. */
+  var MSG_UBIC = {
+    1: "Tu navegador bloqueó la ubicación para este sitio. Actívala en los permisos del sitio (el candado junto a la dirección) y vuelve a intentar.",
+    2: "El teléfono no pudo ubicarte. Revisa que la ubicación del teléfono esté encendida.",
+    3: "Tardó demasiado en ubicarte. Intenta de nuevo, de preferencia con señal o wifi."
+  };
   function ubicarme() {
-    var b = $("btnUbicacion");
-    if (!navigator.geolocation) { b.textContent = "Tu navegador no comparte ubicación"; return; }
-    b.textContent = "Buscando…";
-    navigator.geolocation.getCurrentPosition(function (pos) {
-      b.textContent = "Usar mi ubicación";
-      evaluarPunto(pos.coords.latitude, pos.coords.longitude, true);
-    }, function () { b.textContent = "No pudimos leer tu ubicación"; }, { enableHighAccuracy: true, timeout: 10000 });
+    var bs = [$("btnUbicacion"), $("btnUbicMapa")];
+    function txt(t) { bs.forEach(function (b) { if (b) b.textContent = t; }); }
+    if (!navigator.geolocation || !window.isSecureContext) { avisoUbic("Este navegador no comparte la ubicación con el sitio. Toca el mapa en el lugar que quieras revisar."); return; }
+    txt("Buscando…");
+    function listo(pos) {
+      txt("Usar mi ubicación"); $("btnUbicMapa").textContent = "Mi ubicación";
+      (function esperar() {
+        if (!map) { setTimeout(esperar, 200); return; }
+        evaluarPunto(pos.coords.latitude, pos.coords.longitude, true);
+        if (movil()) {  // el panel tapa la mitad de abajo: sube el punto al hueco visible
+          abrirPanel($("resultadoUbicacion"));
+          map.setCenter({ lat: pos.coords.latitude, lng: pos.coords.longitude }); map.setZoom(15);
+          google.maps.event.addListenerOnce(map, "idle", function () { map.panBy(0, Math.round($("panel").offsetHeight / 2)); });
+        }
+      })();
+    }
+    function fallo(e) {
+      if (e && e.code === 3 && !fallo.otra) {  // sin GPS a tiempo: intenta con wifi/antenas
+        fallo.otra = true;
+        navigator.geolocation.getCurrentPosition(listo, fallo, { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 });
+        return;
+      }
+      fallo.otra = false;
+      txt("Usar mi ubicación"); $("btnUbicMapa").textContent = "Mi ubicación";
+      avisoUbic(MSG_UBIC[e && e.code] || "No pudimos leer tu ubicación.");
+    }
+    fallo.otra = false;
+    navigator.geolocation.getCurrentPosition(listo, fallo, { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 });
+  }
+  function avisoUbic(t) {
+    var r = $("resultadoUbicacion");
+    r.hidden = false; r.className = "resultado"; r.textContent = t;
+    if (movil()) abrirPanel(r);
+  }
+  function movil() { return window.matchMedia("(max-width: 760px)").matches; }
+  function abrirPanel(el) {
+    $("panel").classList.remove("panel--cerrado"); $("panelAsa").setAttribute("aria-expanded", "true");
+    if (el) setTimeout(function () { el.scrollIntoView({ block: "start", behavior: "smooth" }); }, 50);
   }
 
   /* ---------------------------------------------------------- fichas */
@@ -651,7 +688,19 @@
     document.querySelectorAll("input[name=imagen]").forEach(function (i) {
       i.addEventListener("change", function () { estado.imagen = i.value; medir("imagen/" + i.value); if (map) aplicarVisibilidad(); });
     });
-    $("btnUbicacion").addEventListener("click", function () { medir("ubicarme"); if (map) ubicarme(); });
+    $("btnUbicacion").addEventListener("click", function () { medir("ubicarme"); ubicarme(); });
+    $("btnUbicMapa").addEventListener("click", function () { medir("ubicarme/mapa"); ubicarme(); });
+    /* en el teléfono, botones de zonas y leyendas arrancan minimizados, como el panel */
+    [["btnAcciones", "acciones", "Zonas"], ["btnLeyendas", "leyendas", "Leyenda"]].forEach(function (a) {
+      var b = $(a[0]), el = $(a[1]);
+      b.addEventListener("click", function () {
+        var abrir = el.classList.toggle("movil-abierto");
+        b.setAttribute("aria-expanded", String(abrir));
+        b.textContent = abrir ? a[2] + " ×" : a[2];
+        if (abrir && a[0] === "btnAcciones") { $("btnLeyendas").setAttribute("aria-expanded", "false"); $("btnLeyendas").textContent = "Leyenda"; $("leyendas").classList.remove("movil-abierto"); }
+        if (abrir && a[0] === "btnLeyendas") { $("btnAcciones").setAttribute("aria-expanded", "false"); $("btnAcciones").textContent = "Zonas"; $("acciones").classList.remove("movil-abierto"); }
+      });
+    });
     document.querySelectorAll("a.descarga").forEach(function (a) { a.addEventListener("click", function () { medir("descarga/" + a.getAttribute("href").split("/").pop()); }); });
     $("fichaCerrar").addEventListener("click", function () { $("ficha").hidden = true; });
     $("panelAsa").addEventListener("click", function () {

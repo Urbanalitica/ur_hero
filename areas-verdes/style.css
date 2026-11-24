@@ -283,3 +283,18 @@ small { font-weight: 400; color: var(--gris-700); font-variant-numeric: tabular-
 .tabla__titulo{font-size:13px;margin:18px 0 6px}
 #tablaCopa{font-size:11.5px}
 #tablaCopa th,#tablaCopa td{padding-left:4px;padding-right:4px}
+
+/* teléfono: zonas, leyendas y ubicación minimizados */
+.movil-asa,.ubicame{display:none}
+@media (max-width: 760px){
+  .movil-asa{display:block;position:absolute;top:var(--inset);z-index:11;padding:10px 14px;border:0;background:var(--negro);color:var(--blanco);font:700 14px/1 var(--sans);cursor:pointer}
+  .movil-asa--izq{left:var(--inset)}
+  .movil-asa--der{right:var(--inset)}
+  .movil-asa[aria-expanded=true]{background:var(--blanco);color:var(--negro);box-shadow:inset 0 0 0 2px var(--negro)}
+  .acciones,.leyendas{display:none}
+  .acciones.movil-abierto{display:flex;top:calc(var(--inset) + 44px);z-index:11}
+  .leyendas.movil-abierto{display:flex;top:calc(var(--inset) + 44px);max-height:calc(100% - 140px);width:min(260px,calc(100% - 2 * var(--inset)))}
+  .leyendas.movil-abierto[hidden]{display:none}
+  .rezago-lista{top:calc(var(--inset) + 44px);max-height:calc(100% - 130px)}
+  .ubicame{display:block;position:absolute;left:var(--inset);bottom:calc(var(--inset) + 56px);z-index:8;padding:12px 16px;border:0;background:var(--blanco);color:var(--negro);font:700 14px/1 var(--sans);box-shadow:0 1px 4px rgba(0,0,0,.35);cursor:pointer}
+}

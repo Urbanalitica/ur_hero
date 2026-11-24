@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=IBM+Plex+Sans:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=27">
+  <link rel="stylesheet" href="style.css?v=29">
   <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
 </head>
@@ -27,7 +27,10 @@
   <main class="lienzo">
     <div id="mapa" class="mapa" role="application" aria-label="Mapa satelital de áreas verdes del Valle de México"></div>
     <div id="mapaAviso" class="mapa__aviso" hidden></div>
-    <div class="acciones">
+    <button type="button" id="btnAcciones" class="movil-asa movil-asa--izq" aria-expanded="false" aria-controls="acciones">Zonas</button>
+    <button type="button" id="btnLeyendas" class="movil-asa movil-asa--der" aria-expanded="false" aria-controls="leyendas">Leyenda</button>
+    <button type="button" id="btnUbicMapa" class="ubicame" aria-label="Usar mi ubicación">Mi ubicación</button>
+    <div class="acciones" id="acciones">
       <button type="button" id="btnDelicadas" class="boton boton--rojo revelar" aria-pressed="false">Revelar zonas más críticas</button>
       <button type="button" id="btnComparar" class="boton boton--negro revelar" aria-pressed="false" aria-controls="grupoZonas">Comparar zonas</button>
       <div class="acciones__grupo" id="grupoZonas" hidden>
@@ -228,6 +231,6 @@
 
   <script src="config.js?v=3"></script>
   <script src="config.local.js?v=3" onerror="void 0"></script>
-  <script src="zmvm.js?v=58"></script>
+  <script src="zmvm.js?v=62"></script>
 </body>
 </html>
