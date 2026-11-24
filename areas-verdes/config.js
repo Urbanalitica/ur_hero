@@ -9,4 +9,4 @@ window.UR_GMAPS_KEY = window.UR_GMAPS_KEY || "AIzaSyCiWUZ9fGKgDAIMl_rdMr6pTo_z19
 window.UR_GOATCOUNTER = window.UR_GOATCOUNTER || "";
 
 // Llave de CARTO Basemaps (gratis en carto.com/basemaps/apikey). Vacía → no se ofrecen los fondos CARTO.
-window.UR_CARTO_KEY = window.UR_CARTO_KEY || "";
+window.UR_CARTO_KEY = window.UR_CARTO_KEY || "cb1_5b0t_1_309428c5ad93a3d1ada337d2";
