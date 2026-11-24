@@ -4,7 +4,7 @@
   "use strict";
 
   var DATA = "data/zmvm/";
-  var VER = "?v=20261123q";
+  var VER = "?v=20261123r";
 
   /* Analítica sin cookies (GoatCounter). Sólo cuenta visitas y qué se usa de la página:
      capas, opciones, municipio elegido, descargas. Nunca coordenadas, IP ni datos de la persona.
@@ -663,9 +663,9 @@
 
   /* ---- las 10 zonas más rezagadas, más verdes y medianas (data/zmvm/<modo>.json): se pueden prender juntas ---- */
   var ZM = {
-    rezagadas: { btn: "btnRezagadas", color: "#B31D18", nombre: "Más rezagadas", etq: "Zona rezagada", datos: null, capa: null, marcas: [], on: false },
-    medianas: { btn: "btnMedianas", color: "#1F4E8C", nombre: "Medianas", etq: "Zona mediana", datos: null, capa: null, marcas: [], on: false },
-    verdes: { btn: "btnVerdes", color: "#1F6B3A", nombre: "Privilegiadas", etq: "Zona privilegiada", datos: null, capa: null, marcas: [], on: false },
+    rezagadas: { btn: "btnRezagadas", color: "#B31D18", nombre: "Zonas críticas", etq: "Zona crítica", datos: null, capa: null, marcas: [], on: false },
+    medianas: { btn: "btnMedianas", color: "#1F4E8C", nombre: "Zonas medianas", etq: "Zona mediana", datos: null, capa: null, marcas: [], on: false },
+    verdes: { btn: "btnVerdes", color: "#1F6B3A", nombre: "Zonas verdes", etq: "Zona verde", datos: null, capa: null, marcas: [], on: false },
   };
   /* áreas verdes públicas de 1 ha o más (parques, plazas, deportivos, camellones, glorietas), en gris */
   var capa1ha = null;
@@ -770,7 +770,7 @@
     var S = $("comparar"), act = activos(), R = ZM.medianas.datos, sel = zonaSel();
     if (!act.length || !R) { S.hidden = true; return; }
     var dec = function (k, v) { return k === "pob" || k.indexOf("d_") === 0 ? fmt(v) : fmt(v, 1); };
-    var html = '<p class="nota">La línea del centro es el grupo de las medianas. Cada barra sale de ahí: a la derecha si el grupo tiene más, a la izquierda si tiene menos. Los grupos son las 10 zonas juntas, ponderadas por población (las distancias, desde el centro de cada zona). Las marcas son cada zona.</p>' +
+    var html = '<p class="nota">La línea del centro es el grupo de las 10 zonas medianas. Cada barra sale de ahí: a la derecha si el grupo tiene más, a la izquierda si tiene menos. Los grupos son las 10 zonas juntas, ponderadas por población (las distancias, desde el centro de cada zona). Las marcas son cada zona.</p>' +
       '<div class="comparar__claves">' + act.map(function (k) { return '<span><i style="background:' + ZM[k].color + '"></i>' + ZM[k].nombre + "</span>"; }).join("") + '<span><i style="background:#6b6b6b;border-radius:0"></i>Áreas verdes públicas de 1 ha o más</span></div>';
     METRICAS.forEach(function (g) {
       html += "<h3>" + g[0] + "</h3>";
@@ -795,7 +795,7 @@
         }).join("") + "</div>";
       });
     });
-    html += '<p class="nota">Fuentes: INEGI, Censo 2020 por manzana; AMAI por AGEB; OpenStreetMap; Sentinel-2; Meta (copa). Las medianas son zonas densas (100 hab/ha o más) con la copa arbórea por habitante de la gente de en medio del valle (' + fmt(R.banda_copa_hab[0], 1) + " a " + fmt(R.banda_copa_hab[1], 1) + " m² por persona, percentil 40 a 60).</p>";
+    html += '<p class="nota">Fuentes: INEGI, Censo 2020 por manzana; AMAI por AGEB; OpenStreetMap; Sentinel-2; Meta (copa). Las zonas medianas son densas (100 hab/ha o más) con la copa arbórea por habitante de la gente de en medio del valle (' + fmt(R.banda_copa_hab[0], 1) + " a " + fmt(R.banda_copa_hab[1], 1) + " m² por persona, percentil 40 a 60).</p>";
     $("compararCuerpo").innerHTML = html;
     S.hidden = false;
   }
