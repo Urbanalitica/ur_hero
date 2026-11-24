@@ -92,7 +92,7 @@ small { font-weight: 400; color: var(--gris-700); font-variant-numeric: tabular-
 
 /* ficha de polígono */
 .ficha { position: absolute; top: var(--inset); right: var(--inset); width: 360px; max-height: calc(100% - 2 * var(--inset)); overflow-y: auto; background: var(--blanco); z-index: 11; }
-.ficha__cerrar { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border: 0; background: transparent; font: 500 24px/1 var(--sans); cursor: pointer; color: inherit; }
+.ficha__cerrar { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border: 0; background: transparent; font: 500 24px/1 var(--sans); cursor: pointer; color: var(--blanco); }
 .ficha__cabeza { padding: var(--pad); padding-right: 48px; color: var(--blanco); }
 .ficha__cabeza--publico, .ficha__cabeza--naturales, .ficha__cabeza--hex { background: var(--verde); }
 .ficha__cabeza--delicada { background: var(--negro); }
