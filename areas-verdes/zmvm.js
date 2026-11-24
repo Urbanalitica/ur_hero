@@ -4,7 +4,7 @@
   "use strict";
 
   var DATA = "data/zmvm/";
-  var VER = "?v=20261123v";
+  var VER = "?v=20261123w";
 
   /* Analítica sin cookies (GoatCounter). Sólo cuenta visitas y qué se usa de la página:
      capas, opciones, municipio elegido, descargas. Nunca coordenadas, IP ni datos de la persona.
@@ -345,7 +345,7 @@
           var gj = { type: "FeatureCollection", features: d.filas.map(function (r) {
             var p = {};
             d.cols.forEach(function (k, i) { p[k] = r[i]; });
-            p.copa_hab = p.pob >= 50 && p.copa != null ? Math.round(p.copa / 100 * 105332.5 / p.pob * 10) / 10 : null;
+            p.copa_hab = p.pob >= 50 && p.copa != null ? Math.round(p.copa / 100 * 121115 / p.pob * 10) / 10 : null;
             return { type: "Feature", properties: p, geometry: { type: "Polygon", coordinates: [h3.cellToBoundary(p.h, true)] } };
           }) };
           gj.features.forEach(function (f) { hexPorId[f.properties.h] = f.properties; });
