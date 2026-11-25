@@ -81,7 +81,7 @@
     ind.municipios.forEach(function (m) { nombreMun[m.cve] = m.municipio; });
     if ($("kMun")) $("kMun").textContent = fmt(t.municipios);
     $("kPob").textContent = fmt(t.pob / 1e6, 1);
-    $("kSinPct").textContent = fmt(t.pct_sin_publico_naturales, 0) + " %";
+    if ($("kSinPct")) $("kSinPct").textContent =fmt(t.pct_sin_publico_naturales, 0) + " %";
     $("kCopa").textContent = fmt(t.copa_pct, 1) + " %";
     $("nVerdeSat").textContent = fmt(t.pct_verde_ciudad, 0) + " % de la ciudad";
     if (t.pob_delicada != null) $("nDelicada").textContent = fmt(t.pob_delicada / 1e6, 2) + " M hab";
